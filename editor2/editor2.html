@@ -1,0 +1,540 @@
+<html>
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css" />
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+    <script src="http://danml.com/js/download.js"></script>
+	<!--<script src="jsoneditor.min.js"></script>-->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/foundation/5.0.2/css/foundation.min.css">
+    <link href="editor2.css" rel="stylesheet" />
+    <script src="jquery_watermark/jquery.watermark.min.js"></script>
+</head>
+
+<body>
+	<div id="topbar">
+    <ul id="menubar">
+        <li class="linav" style="font-size: 20px;">HistoryActive</li>
+        <li class="linav"><a class="navigation" href="/index.html">Switch to Slideshow</a></li>
+        <li class="linav"><a class="navigation" href="/about.html">About the Developer</a></li>
+        <li class="linav"><input type="file" id="fileselector"></li>
+    </ul>
+	</div>
+
+	<div id="editor_holder">
+        <div id="nothing">HIDDENTEXT</div>
+        <div id="slide_browser">
+            <div id="browserpanel">
+                <button class="browser_buttons" id="add_slide">Add Slide</button>
+                <button class="browser_buttons" id="delete_slide">Delete Slide</button>
+            </div>
+            <ul id="tabs"></ul>
+        </div>
+        <div id="slide_editor">
+            <div id="extensional_checkbox"><input type="checkbox" id="checky">Extensional slide</div>
+            <div id="slide_editor_contents">
+                <p>Slide Name</p>
+                <input class="box" id="slidename" type="text" style="display:inline;">            
+                <div id="coordinatediv">
+                    <p id="coordinatetext">Coordinates</p>
+                    <input class="box coordinates" id="coordinates" type="text">
+                </div>
+                <div id="zoomdiv">
+                    <p id="zoomtext">Zoom</p>
+                    <input class="box zoom" id="zoom" type="number">
+                </div>                
+                
+                <p>Subtitle</p>
+                <input class="box subtitle" id="subtitle" type="text">
+                <p>Header</p>
+                <input class="box header" id="header" type="text">
+                <p>Country Coloring</p>
+                <div class="countryfocusholder">
+                    <div class="blockdown">
+                        <input type="checkbox" id="austria_bigger" value="austria_bigger">Austria<br>
+                        <input type="checkbox" id="belgium "value="belgium">Belgium<br>
+                        <input type="checkbox" id="bosnia" value="bosnia">Bosnia<br>
+                        <input type="checkbox" id="bulgaria" value="bulgaria">Bulgaria<br>
+                        <input type="checkbox" id="denmark" value="denmark">Denmark<br>
+                        <input type="checkbox" id="france_big" value="france_big">France
+                    </div>
+                    <div class="blockdown">
+                        <input type="checkbox" id="germany_big" value="germany_big">Germany<br>
+                        <input type="checkbox" id="great_britain" value="great_britain">Great Britain<br>
+                        <input type="checkbox" id="greece" value="greece">Greece<br>
+                        <input type="checkbox" id="italy" value="italy">Italy<br>
+                        <input type="checkbox" id="luxembourg" value="luxembourg">Luxembourg<br>
+                        <input type="checkbox" id="netherlands" value="netherlands">Netherlands
+                    </div>
+                    <div class="blockdown">
+                        <input type="checkbox" id="norway" value="norway">Norway<br>
+                        <input type="checkbox" id="ottoman_empire" value="ottoman_empire">Ottoman Empire<br>
+                        <input type="checkbox" id="portugal" value="portugal">Portugal<br>
+                        <input type="checkbox" id="romania" value="romania">Romania<br>
+                        <input type="checkbox" id="russia2" value="russia2">Russia<br>
+                        <input type="checkbox" id="serbia" value="serbia">Serbia
+                    </div>
+                    <div class="blockdown">
+                        <input type="checkbox" id="spain" value="spain">Spain<br>
+                        <input type="checkbox" id="sweden" value="sweden">Sweden<br>
+                        <input type="checkbox" id="switzerland" value="switzerland">Switzerland
+                    </div>
+                </div>
+                <p>Markers</p>
+                <div id="multimarkers">
+                    
+
+                </div>
+                <button id="addnewmarker">Add New Marker</button>
+            <p>Date</p>
+            <input class="box date" type="text">
+            <p>External Link</p>
+            <div id="externallinkholder">
+                <div class="indent">
+                </div>
+                <button style="margin-top:1rem; margin-left:1rem; display:block;" id="addnewlink">Add New Link</button>
+            </div>
+            </div> <!--Slider editor contents-->
+        </div>
+    </div>
+    <button id="download">Download edits</button>
+
+<script type="text/javascript">
+
+	
+
+/*var fileselector = document.getElementById("fileselector");
+fileselector.addEventListener("click", function(){
+
+});*/
+
+var editorJson = new Array();
+
+/*TAB SELECTION*/
+
+var currentTab;
+var idCounter = -1;
+
+
+/*FILE UPLOAD SERVICE*/
+
+var uploadedJson;
+var resultJson = [];
+var fileSelector = document.getElementById("fileselector");
+
+var appendToEditor = function(){
+
+    console.log("resultJson.length: " + resultJson.length);
+
+    idCounter = -1;
+    $("#tabs").html("");
+
+    for(var m=0 ; m<resultJson.length ; m++){
+        /* IF editorJson DOES NOT HAVE SLIDENAMES, APPEND AUTO-IDS. */
+        if(!resultJson[m].hasOwnProperty("slidename")) resultJson[m]["slidename"] = "Slide " + (m+1);
+
+        editorJson[m] = resultJson[m];
+
+        $("#add_slide").click();
+        $(".tab").last().html(editorJson[m]["slidename"]);
+    }
+
+    $(".tab").first().click();
+    
+}
+
+
+fileselector.addEventListener("change", function(e){
+    var file = fileSelector.files[0];
+
+    try{
+        var reader = new FileReader();
+        reader.onload = function(e){
+            uploadedJson = reader.result;
+            try{resultJson = JSON.parse(uploadedJson);} catch(err){console.log(err);}
+            appendToEditor();
+        }
+        reader.readAsText(file);
+    }
+    catch(err){
+        console.log(err);
+    }
+});
+
+
+
+
+/*FIND ACTIVE TAB*/
+
+var activeTab = function(){
+    return $("*").find(".activetab");
+}
+
+/* SLIDE NAME TEXTBOX = SLIDE ID = LI TEXT*/
+
+$("#slidename").on('change keyup paste', function() {
+    activeTab().html($("#slidename").val());
+    activeTab().removeAttr("id");
+    activeTab().attr("id",$("#slidename").val());
+
+    //CHANGE SLIDENAME ATTRIBUTE OF JSON CORRESPONDANT OF TAB.
+ 
+    for(var y=0; y<editorJson.length; y++){
+        if($(this).data("value") == editorJson[y]["slidename"]){
+            editorJson[y]["slidename"] = $("#slidename").val();
+            $(this).data("value", $("#slidename").val());
+        }
+    }
+});
+
+var storage = new Object();
+
+var checkBoxChange = function() {
+    if( $("#checky").is(":checked")) {
+        console.log("Extensional checkbox checked!");
+        storage[slidename] = $("#slide_editor_contents").html();
+        $("#slide_editor_contents").html('<p>Slide Name</p><input class="box" id="slidename" type="text" style="display:inline;"><p>Extensional Subtitle</p><input class="box" id="extensional_subtitle" type="text" style="display:inline;">');
+        $("#slidename").val(slidename);
+    } else {
+        if(storage[slidename]){
+            $("#slide_editor_contents").html(storage[slidename]);
+            $("#slidename").val(slidename);
+        }
+        else {
+            $("#slide_editor_contents").html('<p>Slide Name</p> <input class="box" id="slidename" type="text" style="display:inline;"> <div id="coordinatediv"> <p id="coordinatetext">Coordinates</p> <input class="box coordinates" id="coordinates" type="text"> </div> <div id="zoomdiv"> <p id="zoomtext">Zoom</p> <input class="box zoom" id="zoom" type="number"> </div> <p>Subtitle</p> <input class="box subtitle" id="subtitle" type="text"> <p>Header</p> <input class="box header" id="header" type="text"> <p>Country Coloring</p> <div class="countryfocusholder"> <div class="blockdown"> <input type="checkbox" id="austria_bigger" value="austria_bigger">Austria<br> <input type="checkbox" id="belgium "value="belgium">Belgium<br> <input type="checkbox" id="bosnia" value="bosnia">Bosnia<br> <input type="checkbox" id="bulgaria" value="bulgaria">Bulgaria<br> <input type="checkbox" id="denmark" value="denmark">Denmark<br> <input type="checkbox" id="france_big" value="france_big">France </div> <div class="blockdown"> <input type="checkbox" id="germany_big" value="germany_big">Germany<br> <input type="checkbox" id="great_britain" value="great_britain">Great Britain<br> <input type="checkbox" id="greece" value="greece">Greece<br> <input type="checkbox" id="italy" value="italy">Italy<br> <input type="checkbox" id="luxembourg" value="luxembourg">Luxembourg<br> <input type="checkbox" id="netherlands" value="netherlands">Netherlands </div> <div class="blockdown"> <input type="checkbox" id="norway" value="norway">Norway<br> <input type="checkbox" id="ottoman_empire" value="ottoman_empire">Ottoman Empire<br> <input type="checkbox" id="portugal" value="portugal">Portugal<br> <input type="checkbox" id="romania" value="romania">Romania<br> <input type="checkbox" id="russia2" value="russia2">Russia<br> <input type="checkbox" id="serbia" value="serbia">Serbia </div> <div class="blockdown"> <input type="checkbox" id="spain" value="spain">Spain<br> <input type="checkbox" id="sweden" value="sweden">Sweden<br> <input type="checkbox" id="switzerland" value="switzerland">Switzerland </div> </div> <p>Markers</p> <div id="multimarkers"> </div> <button id="addnewmarker">Add New Marker</button> <p>Date</p> <input class="box date" type="text"> <p>External Link</p> <div id="externallinkholder"> <div class="indent"> </div> <button style="margin-top:1rem; margin-left:1rem; display:block;" id="addnewlink">Add New Link</button> </div>');
+        }  
+    }
+};
+
+$("#checky").on("change", checkBoxChange);
+
+
+/*SLIDE ADDITION*/
+
+
+var number_of_slides = function(){
+    return $("#tabs").children().length;
+}
+var slide_index = number_of_slides() + 1; // !!! PROBABLY DOES NOT WORK EITHER !!!
+
+var slidename;
+var countrylist = ["austria_bigger", "belgium", "bosnia", "bulgaria", "denmark", "france_big", "germany_big", "great_britain", "greece", "italy", "luxembourg", "netherlands", "norway", "ottoman_empire", "portugal", "romania", "russia2", "serbia", "spain", "sweden", "switzerland"];
+var i;
+var g;
+var a;
+var k;
+
+
+var appendToJson = function(target){
+    if($(this).prop("class") === "markercoordinates") {
+        editorJson[i]["markers"][a]["coordinates"] = $(this).val();
+    } else if ($(this).attr("class") === "markertext" {
+        editorJson[i]["markers"][a]["text"] = $(this).val();
+    } else if ($(this).attr("tagname") === "select"){
+        editorJson[i]["markers"][a]["icon"] = $(this).val();
+    } else if ($(this).prop("class") === "imagelink") {
+        editorJson[i]["markers"][a]["imageset"][k][0] = $(this).val();
+    } else if ($(this).prop("class") === "imagedescription") {
+        editorJson[i]["markers"][a]["imageset"][k][1] = $(this).val();
+    } else if ($(this).prop("id").indexOf(countrylist) !== -1){
+        if( $(this).is(":checked") ) {
+            editorJson[i]["focusoncountry"].push( $(this).prop("id") );
+        }
+    } else if ($(this).prop("class")) {
+        
+    }
+}
+
+
+
+$(document).on("click", ".tab" ,function(){
+
+        //$(".tab").css("background-color", "red");
+        //$(this).css("background-color", "blue");
+
+        $("#tabs").children().removeClass("activetab");
+        $(this).addClass("activetab");
+
+        slidename = $(this).html();
+        $("#slidename").val(slidename);
+
+        for(i = 0; i < number_of_slides(); i++){
+            
+            if( editorJson[i]["slidename"] === slidename){
+
+                var setBoxNumbersAndAppend = function(){
+                    
+
+                    $("#multimarkers").html(""); //REMOVE ALL MARKERBOXES --- VERIFICATION NEEDED.
+
+                    for (a = 0; a<number_of_markers(); a++){ //ADD MARKERBOXES AS NEEDED
+                        $("#addnewmarker").click();
+
+                        $(".markerholder").last().find( $(".markercoordinates") ).val(editorJson[i]["markers"][a]["coordinates"]);
+                        $(".markerholder").last().find( $(".markercoordinates") ).on("change keyup paste", appendToJson());
+
+                        $(".markerholder").last().find( $(".markertext") ).val(editorJson[i]["markers"][a]["text"]);
+                        $(".markerholder").last().find( $(".markertext") ).on("change keyup paste", appendToJson());
+
+                        $(".markerholder").last().find( $("select") ).val(editorJson[i]["markers"][a]["icon"]);
+                        $(".markerholder").last().find( $("select") ).on("change keyup paste", appendToJson());
+
+                        if(markerimagearray[a] !== 0){
+                            for(k = 0; k<markerimagearray[a]; k++){
+                                $(".markerholder").last().find(".addnewimage").click();
+                                $(".markerholder").last().find(".boxpair").last().find(".imagelink").val(editorJson[i]["markers"][a]["imageset"][k][0]);
+                                $(".markerholder").last().find(".boxpair").last().find(".imagelink").on("change keyup paste", appendToJson());
+                                $(".markerholder").last().find(".boxpair").last().find(".imagedescription").val(editorJson[i]["markers"][a]["imageset"][k][1]);
+                                $(".markerholder").last().find(".boxpair").last().find(".imagedescription").on("change keyup paste", appendToJson());
+                            }
+                        }
+                    }
+
+                    //CHECKPOINT
+                    if(number_of_markers() !== $("#multimarkers").children().length){
+                        alert("Number of markers = " + number_of_markers() + " /// Number of markerboxes = " + $("#multimarkers").children().length);
+                        //break;
+                    }
+
+                }
+
+                var number_of_externallinks = function(){
+                    if(editorJson[i].hasOwnProperty("external_link")){
+                        return editorJson[i]["external_link"].length;
+                    }
+                    else{
+                        return 0;
+                    }
+                }
+
+                var number_of_markers = function(){
+                    if(editorJson[i].hasOwnProperty("markers")){
+                        return editorJson[i]["markers"].length;
+                    }
+                    else {
+                        return 0;
+                    }
+                }
+
+                var checkBoxes = function(){
+
+                    $('input:checkbox').removeAttr('checked'); //UNCHECK ALL BOXES
+
+                    if(editorJson[i].hasOwnProperty("focusoncountry")){
+                        for(g = 0; g<countrylist.length; g++){
+                            if(editorJson[i]["focusoncountry"].indexOf(countrylist[g]) !== -1){
+                                $("#" + countrylist[g]).prop('checked', true);
+                            }
+                            $("#" + countrylist[g]).on("change", appendToJson());
+                        }
+                    }
+                }
+
+                var markerimagearray = []; //[5,0,2,4] (LENGTH = # OF MARKERS ; INDIVIDUAL NUMBERS = IMAGES PER MARKER)
+
+                debugger;
+                $("#checky").prop("checked", false).trigger("change");
+
+                if( editorJson[i].hasOwnProperty("extensional")){
+                    console.log("Found extensional slide.");
+                    $("#checky").prop("checked", true).trigger("change"); 
+                    //checkBoxChange();
+                    $("#checky").val(editorJson[i]["extensional"]);
+                    break;
+                }         
+
+
+                for (var m=0; m<number_of_markers(); m++){
+                    if(editorJson[i]["markers"][m].hasOwnProperty("imageset")){
+                        markerimagearray[m] = editorJson[i]["markers"][m]["imageset"].length;
+                        console.log(slidename + " has " + editorJson[i]["markers"][m]["imageset"].length + " images on marker " + m);
+                    }
+                    else {
+                        markerimagearray[m] = 0;
+                    }    
+                }
+
+                if (markerimagearray.length !== 0) console.log(JSON.stringify(markerimagearray));
+                
+
+                var number_of_markerboxes = $("#multimarkers").children().length;
+
+                
+
+                setBoxNumbersAndAppend();
+
+
+                $('#externallinkholder').find( $('.indent') ).html(""); //DELETE ALL EXTERNAL LINKS.
+
+                for(var t=1; t <= number_of_externallinks(); t++){
+                    $("#addnewlink").click();
+                    $('#externallinkholder').find( $(".indent") ).last().find( $(".externallink")).val(editorJson[i]["external_link"][t-1]["link"]);
+                    $('#externallinkholder').find( $(".indent") ).last().find( $(".externallinkdescription")).val(editorJson[i]["external_link"][t-1]["text"]);
+                }
+
+                $("#coordinates").val(editorJson[i]["coordinates"]);
+                $("#subtitle").val(editorJson[i]["subtitle"]);
+
+
+                checkBoxes();
+
+                $("#slide_editor_contents").find( $(".zoom") ).watermark("A number from 1 (low zoom) to 10 (high zoom).");
+                $("#slide_editor_contents").find( $(".subtitle") ).watermark("");
+                $("#slide_editor_contents").find( $(".header") ).watermark("A two second popping header at the top of the screen.");
+                $("#slide_editor_contents").find( $(".markercoordinates") ).watermark("38.773632,14.0868627");
+                $("#slide_editor_contents").find( $(".markertext") ).watermark("This is where the Lausanne Pact was signed.");
+                $("#slide_editor_contents").find( $(".imagelink") ).watermark("Link to image. eg. http://images.google.com/war.jpg");
+                $("#slide_editor_contents").find( $(".imagedescription") ).watermark("A photo of bunkers at the Western Front.");
+                $("#slide_editor_contents").find( $(".date") ).watermark("11,3,1915");
+                $("#slide_editor_contents").find( $(".externallink") ).watermark("Link to an external webpage.");
+                $("#slide_editor_contents").find( $(".externallinkdescription") ).watermark("Clickable text leading to this link.");
+            }
+        }
+
+              
+    });
+
+ 
+
+$("#add_slide").click( function(){
+
+    idCounter++;
+    var initialSlideID = "slide" + (idCounter + 1);
+    $("#tabs").append('<li class="tab" id="' + initialSlideID + '">Slide ' + (idCounter + 1) + '</li>');
+    
+    $("#slidename").val("Slide " + (idCounter + 1) ); //TEXTBOX SET VALUE.
+    $("#slidename").data("value",$("#slidename").val());
+
+    while(number_of_slides() > editorJson.length){
+        extendEditorJson();
+        console.log("editorJson.length: " + editorJson.length);
+    }
+
+    $(".tab").last().click();
+    $(".tab").removeClass("lastslide");
+    $(".tab").last().addClass("lastslide");
+
+});
+
+
+var extendEditorJson = function(){
+    var currentLength = editorJson.length;
+
+    editorJson[currentLength] = new Object();
+    editorJson[currentLength]["slidename"] = $(".tab").last().html();
+    editorJson[currentLength]["coordinates"] = "";
+    editorJson[currentLength]["subtitle"] = "";
+    editorJson[currentLength]["header"] = "";
+    editorJson[currentLength]["zoom"] = "";
+    editorJson[currentLength]["date"] = "";
+}
+
+
+$("#delete_slide").click( function(){
+    for(var r = 0; r<editorJson.length; r++){
+        if($("#slidename").val() == editorJson[r]["slidename"]){
+            editorJson.splice(r,1);
+        }
+    }
+
+    activeTab().prev().click();
+    activeTab().next().remove();
+
+
+});
+
+$("#add_slide").click();
+$("#tabs").sortable({
+    sort: function(){
+        $(".tab").removeClass("lastslide");    
+    },
+    stop: function(){
+        $(".tab").last().addClass("lastslide");
+
+        var targetJson = new Array();
+
+        for(var y=0; y<editorJson.length; y++){
+            for( var u=0; u<editorJson.length; u++){
+                if( $("#editor_holder ul li:nth-child(" + (y+1) + ")").html() === editorJson[u]["slidename"]){
+                    targetJson[y] = editorJson[u];
+                    console.log("JSON index " + u + " moved to index " + y + " having slide name " + targetJson[y]["slidename"] + ".");
+                }
+            }
+        }
+
+        editorJson = targetJson;
+    }
+});
+$("#tabs").disableSelection();
+
+
+//ADD LINK/IMAGE/MARKER BUTTONS
+
+var addBoxPair = function(linkmarker){
+    if(linkmarker == "link"){
+        $('#externallinkholder').find( $('.indent') ).append('<div class="boxpair"> <input class="externallink" style="display:inline; margin-left:1rem; margin-bottom:0.7rem; margin-right:1rem; height:2rem; width:40%;" type="text"> <input class="externallinkdescription" style="display:inline; margin-bottom:0.7rem; margin-right:1rem; height:2rem; width:40%;" type="text"><button class="cross">X</button></div>');
+
+        $(".boxpair").mouseenter( function(){$(this).find( $(".cross") ).css("display","inline")})
+            .mouseleave( function(){$(this).find( $(".cross") ).css("display","none");});
+
+        $(".cross").click( function(){
+                $(this).parent().remove();
+            });
+    }
+    else if(linkmarker == "marker"){
+        $("#multimarkers").append('<div class="markerholder indent"> <div class="markersubholder"> <p class="markersubparagraph">Marker Coordinates</p> <input class="markercoordinates" style="display:inline; width:30%; height:2rem;" type="text" step="any"><button class="markercross cross">X</button> </div> <div class="markersubholder"> <p class="markersubparagraph">Text</p> <input class="markertext" style="display:inline; height:2rem; width:45%" type="text"> </div> <div class="markersubholder"> <p style="display:inline-block; height:2rem;" class="markersubparagraph">Icon</p> <select style="display:inline; height:2rem; width: 20%;" name="icontype"> <option value="swordsicon">Swords</option> <option value="swordsiconlight">Swords Light</option> <option value="swordsiconwhite">Swords White</option> <option value="cannonicon">Cannon</option> <option value="cannoniconlight">Cannon Light</option> <option value="cannoniconwhite">Cannon White</option> <option value="factoryicon">Factory</option> <option value="factoryiconlight">Factory Light</option> <option value="factoryiconwhite">Factory White</option> <option value="mineicon">Mine</option> <option value="mineiconlight">Mine Light</option> <option value="mineiconwhite">Mine White</option> </select> </div> <div class="markersubholder imageset"> <p class="markersubparagraph">Imageset</p> <div class="indent"> </div> <button style="margin-top:1rem; margin-left:1rem; display:block;" class="addnewimage">Add New Image</button> </div> </div>');
+
+            $(".markerholder").mouseenter( function(){$(this).find( $(".markercross") ).css("display","inline")})
+            .mouseleave( function(){$(this).find( $(".markercross") ).css("display","none");});
+
+            $(".markercross").click( function(){
+                $(this).parent().parent().remove();
+            });      
+
+        $(".markerholder").last().find($(".addnewimage")).click( function(){
+            $(this).prev().append('<div class="boxpair"><input class="imagelink" style="display:inline; margin-bottom:0.7rem; margin-right:1rem; margin-left:1rem; height:2rem; width:40%;" type="text"><input class="imagedescription" style="display:inline; margin-bottom:0.7rem; margin-right:1rem; height:2rem; width:40%;" type="text"><button class="cross">X</button></div>');           
+
+            $(".boxpair").mouseenter( function(){$(this).find( $(".cross") ).css("display","inline")})
+            .mouseleave( function(){$(this).find( $(".cross") ).css("display","none");});
+
+            $(".cross").click( function(){
+                $(this).parent().remove();
+            });
+
+        });
+        
+    }
+}
+
+$("#addnewmarker").click( function(){addBoxPair("marker");});
+$("#addnewlink").click( function(){addBoxPair("link");});
+
+
+var appendWaterMarks = function(){
+    var $batch = $("#slide_editor_contents").find( $("*") );
+    console.log($batch.length);
+
+    $("#slide_editor_contents").find( $(".coordinates") ).watermark("[38.773632,14.0868627]");
+    $("#slide_editor_contents").find( $(".zoom") ).watermark("A number from 1 (low zoom) to 10 (high zoom).");
+    $("#slide_editor_contents").find( $(".subtitle") ).watermark("");
+    $("#slide_editor_contents").find( $(".header") ).watermark("A two second popping header at the top of the screen.");
+    $("#slide_editor_contents").find( $(".markercoordinates") ).watermark("[38.773632,14.0868627]");
+    $("#slide_editor_contents").find( $(".markertext") ).watermark("This is where the Lausanne Pact was signed.");
+    $("#slide_editor_contents").find( $(".imagelink") ).watermark("Link to image. eg. http://images.google.com/war.jpg");
+    $("#slide_editor_contents").find( $(".imagedescription") ).watermark("A photo of bunkers at the Western Front.");
+    $("#slide_editor_contents").find( $(".date") ).watermark("[11,3,1915]");
+    $("#slide_editor_contents").find( $(".externallink") ).watermark("Link to an external webpage.");
+    $("#slide_editor_contents").find( $(".externallinkdescription") ).watermark("Clickable text leading to this link.");
+
+}
+
+$("#download").click( function(){
+    download(JSON.stringify(editorJson), "slides.txt", "text/plain");
+});
+
+$(document).ready( function(){
+    $('#editor_holder').height( $(window).height() - $("#topbar").height);
+});
+
+</script>
+</body>
+</html>

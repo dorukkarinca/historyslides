@@ -1,0 +1,118 @@
+{
+	"$ref": "generalslide.json",
+	"properties": {
+            "type": "array",
+            "title": "Slides",
+            "format": "tabs",
+            "items": {
+                "title": "Slides",
+                "type": "object",
+                "headerTemplate": "Slide {{i}}",
+                /*"oneOf": [
+                    {
+                        "$ref": "generalslide.json",
+                        "title": "General Slide"
+                    },
+                    {
+                        "$ref": "extensional.json",
+                        "title": "Extensional"
+                    }
+                ]*/
+                "properties": {
+
+        "Extensional String": {
+            "type": "string",
+            "description": "Used to split the subtitle into chunks without having to dupe slides."
+        },
+        "Subtitle": {
+            "type": "string"
+        },
+        "Coordinates": {
+            "type": "string",
+            "title": "Coordinates",
+            "description": "Coordinates to pan the map to. [Latitude, longtitude]",
+            "default": "[36.50004,38.987991]"
+        },
+        "Zoom": {
+            "type": "integer",
+            "default": 5
+        },
+        "Date": {
+            "type": "string",
+            "title": "Date",
+            "description": "[26,09,1916] or a string of your choice."
+        },
+        "Focusoncountry": {
+            "type": "array",
+            "format": "table",
+            "uniqueItems": true,
+            "items": {
+                "type": "string",
+                "title": "country",
+                "enum": ["", "austria_bigger", "belgium", "bosnia", "bulgaria", "denmark", "france_big", "germany_big", "great_britain", "greece", "italy", "luxembourg", "netherlands", "norway", "ottoman_empire", "portugal", "romania", "russia2", "serbia", "spain", "sweden", "switzerland"]
+            }
+        },
+        "Markers": {
+            "type": "array",
+            "format": "table",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "Coordinates": {
+                        "type": "string",
+                        "title": "Coordinates",
+                        "default": "[36.50004,38.987991]"
+                    },
+                    "Text": {
+                        "type": "string",
+                        "default": "Descriptive text for the marker popup."
+                    },
+                    "Imageset": {
+                        "type": "array",
+                        "format": "table",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "Link": {
+                                    "type": "string",
+                                    "default": "image.jpg"
+                                },
+                                "Image Description": {
+                                    "type": "string",
+                                    "default": "Image description."
+                                }
+                        }
+                    }
+                },
+                "Icon": {
+                    "type": "string",
+                    "enum": ["swordsicon", "swordsiconlight", "swordsiconwhite", "cannonicon", "cannoniconlight", "cannoniconwhite", "factoryicon", "factoryiconlight", "factoryiconwhite", "mineicon", "mineiconlight", "mineiconwhite"]                    
+                }
+            }
+        }
+    },
+    "Header": {
+        "type": "string",
+            "description": "Optionally specify a header that appears for two seconds at the top of the screen."
+    },
+    "External Link": {
+        "type": "array",
+            "format": "table",
+            "items": {
+            "type": "object",
+                "properties": {
+                "link": {
+                    "type": "string",
+                        "default": "http://en.wikipedia.org"
+                },
+                "text": {
+                    "type": "string",
+                        "default": "Clickable text redirecting to link specified."
+                }
+            }
+        }
+    }
+    }
+            }
+        }
+    }

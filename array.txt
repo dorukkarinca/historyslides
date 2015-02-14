@@ -1,0 +1,262 @@
+[
+    {
+        "subtitle": "You are viewing the Interactive Slideshow of World War I. Press next to begin, or slide forward using the slider below."
+    },
+    {
+        "coordinates": [40,20],
+        "fadetogray": true,
+        "subtitle": "This is an approximate view of Europe in the year of 1900.",
+        "header": "Introduction",
+        "zoom": 4,
+        "date": [0,0,1900],
+        "external_link": [{
+            "link": "http://en.wikipedia.org/wiki/Europe#20th_century_to_the_present",
+            "text": "Wikipedia: Europe from 20th century to the present"
+        }]
+    },
+    {
+        "extensional": "About every European country had its own reasons to start a war, reasons that date back up to the 18th century."
+    },
+    {
+        "subtitle": "French Revolution inspired nations living under the rule of an empire to declare their own sovereignty.",
+        "date": [14,7,1789],
+        "markers": [{
+            "coordinates": [48.949902, 2.375022],
+            "header": "Storming of the Bastille",
+            "text": "One of the iconic paintings depicting the French Revolution was Storming of the Bastille. <b>Click on any image to zoom. Click on water or the top right corner to dismiss popups.</b>",
+            "icon": "cannonicon",
+            "openpopup": true,
+            "imageset": [["Prise_de_la_Bastille.jpg", "Storming of the Bastille"]]
+        }],
+        "coordinates": [50.949902, 2.375022],
+        "header": "French Revolution",
+        "external_link": [{"link": "http://en.wikipedia.org/wiki/French_revolution", "text": "Wikipedia: French Revolution"}]
+    },
+    {
+        "date": "1878",
+        "coordinates": [43.8, 23.1],
+        "subtitle": "Balkan countries are good examples. These countries have been part of the Ottoman Empire for more than 400 years.",
+        "focusoncountry": ["greece", "austria_bigger", "italy", "switzerland", "france_big", "spain", "portugal", "belgium", "netherlands","germany_big", "russia2", "great_britain"],
+        "zoom": 6
+    },
+    {
+        "date": "1867",
+        "subtitle": "Serbians rose for a revolution that lasted 10 years and gained autonomy. Eventually, they gained full independence in 1867.",
+        "external_link": [{"link": "http://en.wikipedia.org/wiki/Serbia#Revolution_and_independence", "text": "Serbia: Revolution and Indepence"}],
+        "focusoncountry": ["greece", "austria_bigger", "italy", "switzerland", "france_big", "spain", "portugal", "belgium", "netherlands","germany_big", "russia2", "great_britain", "serbia"],
+        "zoom": 6        
+    },
+    {
+        "date": "1878",
+        "subtitle": "Romania followed that in 1878.",
+        "external_link": [{"link": "http://en.wikipedia.org/wiki/Romania#Independence_and_monarchy", "text": "Romania: Independence and monarchy"}],
+        "focusoncountry": ["greece", "austria_bigger", "italy", "switzerland", "france_big", "spain", "portugal", "belgium", "netherlands","germany_big", "russia2", "great_britain", "serbia", "romania"],
+        "zoom": 6   
+    },
+    {
+        "date": "1908",
+        "subtitle": "And Bulgaria by 1908.",
+        "external_link": [{"link": "http://en.wikipedia.org/wiki/Bulgaria#Third_Bulgarian_state", "text": "Bulgaria: Third Bulgarian state"}],
+        "focusoncountry": ["greece", "austria_bigger", "italy", "switzerland", "france_big", "spain", "portugal", "belgium", "netherlands","germany_big", "russia2", "great_britain", "serbia", "romania", "bulgaria"],
+        "zoom": 6   
+    },
+    {
+        "subtitle": "But for the time being, that's just another matter. Let's look into reasons other than nation independence that ignited the WWI.",
+        "date": "1900"
+    },        
+    {
+        "subtitle": "Industrial Revolution was an important factor. Countries such as France and Great Britain had formed colonies in parts of Africa and Asia to meet their raw material demands. Their quantities of production were growing rapidly.",
+        "header": "Industrial Revolution",
+        "focusoncountry": ["france_big", "great_britain"],
+        "coordinates": [48.949902, 2.375022],
+        "date": "1780-1820",
+        "markers": [{
+            "coordinates": [52.145605, -1.184548],
+            "icon": "factoryicon",
+            "imageset": [["industrial-revolution-factory-boys.jpg", "The need for labor force to operate factories resulted in the introduction of child labor."]],
+            "text": "The need for labor force to operate factories resulted in the introduction of child labor."      
+        },
+        {
+            "coordinates": [48.949902, 2.375022],
+            "icon": "factoryicon",
+            "imageset": [["industrial-revolution-france.jpg", ""]],
+            "text": ""
+        }],
+        "external_link": [{"link": "http://en.wikipedia.org/wiki/Industrial_Revolution", "text": "Wikipedia: Industrial Revolution"}]
+    },
+    {
+        "subtitle": "Germany was uneasy about this situation. Having recently stabilized its political affairs, it had very few colonies compared to its economically powerful neighbors, France and Great Britain.",
+        "date": "1780-1820",
+        "focusoncountry": ["germany_big"],
+        "coordinates": [50,15],
+        "zoom": 5,
+        "date": "1780-1820",
+        "markers": [{
+            "coordinates": [52.145605, -1.184548],
+            "icon": "factoryicon",
+            "imageset": [["industrial-revolution-factory-boys.jpg", "The need for labor force to operate factories resulted in the introduction of child labor."]],
+            "text": "The need for labor force to operate factories resulted in the introduction of child labor."
+        },
+        {
+            "coordinates": [48.949902, 2.375022],
+            "icon": "factoryicon",
+            "imageset": [["industrial-revolution-france.jpg", ""]],
+            "text": ""
+        }]
+    },
+    {
+        "extensional": "Thus, Germany could make use of a war to claim their colonies. Otherwise it couldn't be able to catch up with its fast-growing neighbors."
+    },
+    {
+        "subtitle": "Another affair between Germany and France originated from the coal mine lying in a territory called Alsace-Lorraine. This mine is bordering to France and Germany.",
+        "date": "1780-1820",
+        "markers": [{
+            "coordinates": [48.241057, 7.191803],
+            "icon": "mineicon",
+            "openpopup": true,
+            "text": "Miners working at Alsace-Lorraine.",
+            "imageset": [["alsace-lorraine-mining.jpg", "Miners working at Alsace-Lorraine"]]
+        }]
+    },
+    {
+        "extensional": "As you might guess, both countries were claiming the mine as their own. Coal mining was very important at the time because it provided the energy needed to operate the Industrial Age factories, ships and trains.",
+        "markers": [{
+            "coordinates": [48.241057, 7.191803],
+            "icon": "mineicon",
+            "openpopup": true,
+            "text": "Miners working at Alsace-Lorraine.",
+            "imageset": [["alsace-lorraine-mining.jpg", "Miners working at Alsace-Lorraine"]]
+        }]
+    }, 
+    {
+        "focusoncountry": ["russia2"],
+        "coordinates": [51.645294049305406,29.70703125],
+        "date": "1780-1820",
+        "subtitle": "Russia, ruled by tsardom at the time, had always been looking for means to reach the Meditterranean Sea, but the Ottoman Empire was in the way.",
+        "date": [5,6,1918]
+    },
+    {
+        "extensional": "However, Russia was not prepared for the war, and the Tsar wanted to overrule the army for the war. The public was uneasy about the situation. A potential inner crisis for Russia was at hand."
+    },
+    {
+        "subtitle": "This was the state of Europe as the First World War was approaching.",
+        "coordinates": [40, 20],
+        "zoom": 4,
+        "date": [7,8,1920]
+    },
+    {
+        "header": "Into The War",
+        "date": [28,6,1914],
+        "subtitle": "In 1914, The Archduke of Austria, Franz Ferdinand was assassinated by a Serbian nationalist.",
+        "coordinates": [47.8, 20.1],
+        "focusoncountry": ["austria_bigger"],
+        "external_link": [{"link": "http://en.wikipedia.org/wiki/Assassination_of_Archduke_Franz_Ferdinand_of_Austria", "text": "Wikipedia: Assassination of Franz Ferdinand"}]
+    },
+    {
+        "date": [0,8,1914],
+        "subtitle": "As Austro-Hungarians declared war on Serbia and Russia mobilized, Germany took advantage of the ignition of the war and invaded Belgium and Luxembourg, although those countries had chosen to remain neutral.",
+        "focusoncountry": ["germany_big", "luxembourg", "belgium"],
+        "coordinates": [49.78473, 11.09123]
+    },
+    {
+        "date": [0,8,1914],
+        "subtitle": "Consequently, Great Britain took side against Germany. Germany moved on to invade France, and the Western Front was opened.",
+        "focusoncountry": ["germany_big", "luxembourg", "belgium", "great_britain"],
+        "coordinates": [51.78473, 11.09123]
+    },
+    {
+        "header": "Western Front",
+        "external_link": [{"link": "http://en.wikipedia.org/wiki/Western_Front_(World_War_I)", "text": "Wikipedia: Western Front WWI"}],
+        "subtitle": "This front witnessed new technology such as poison gas for the first time.",
+        "focusoncountry": ["germany_big", "luxembourg", "belgium", "great_britain", "france_big"],
+        "coordinates": [49.78473, 11.09123],
+        "markers": [{
+            "header": "Western Front",
+            "coordinates": [49.7, 4.8],
+            "icon": "cannonicon",
+            "openpopup": true,
+            "text": "No significant advances were made in the Western Front. Total casualties are above 1 million.",
+            "imageset": [["western-front.png", "Western Front trench line in high-res map"], ["german-soldier-at-western-front.jpg", "German soldier on the Western Front, 1916"]]
+        }]
+    },
+    {
+        "subtitle": "The Russian Army was successful against the Austro-Hungarians, but they were stopped at the East Prussia Invasion by the Germans.",
+        "external_link": [{"link": "http://en.wikipedia.org/wiki/Eastern_Front_(World_War_I)", "text": "Eastern Front WWI"},{"text": "Russian Invasion of East Prussia", "link": "http://en.wikipedia.org/wiki/Russian_invasion_of_East_Prussia_(1914)"}],
+        "coordinates": [53.6,21.4],
+        "markers": [{
+            "header": "Eastern Front",
+            "coordinates": [52.2,24.1],
+            "icon": "cannonicon",
+            "text": "Eastern Front was the frontier between Russian Empire and Romania versus Austro-Hungarian Empire, Bulgaria and Germany.",
+            "imageset": [["eastern-front-map.gif", "Map of the Eastern Front, before and after 1915"],["eastern-front-armies-in-a-village.jpg", "Armies in a village by the Eastern Front."]]
+        },{
+            "header": "Russian Invasion of East Prussia",
+            "coordinates": [53.6,21.4],
+            "icon": "cannoniconwhite",
+            "text": "Russians were defeated by 320,000 casualties in the East Prussia Invasion.",
+            "imageset": [["russian-invasion-of-east-prussia-map.jpg", "Map of Russian Invasion of East Prussia"]]
+        }],
+        "date": ["August-September", "1914"]
+    },
+    {
+        "subtitle": "The Ottoman Empire joined the war in November 1914. Its primary goal was to earn back the lost soil in the Balkans.",
+        "date": [0,11,1914],
+        "coordinates": [39.3,32.8]
+    },
+    {
+        "subtitle": "Italy and Bulgaria joined in 1915, Romania in 1916 and the United States in 1917.",
+        "coordinates": [43.1,12.3],
+        "zoom": 4,
+        "focusoncountry": ["italy", "bulgaria", "romania"]
+    },
+    {
+        "subtitle": "In March 1917, the tsardom government of Russia collapsed, and the new Russia switched to the Axis side after the October Revolution.",
+        "coordinates": [51.6,29.7],
+        "marker": [{
+            "header": "The Bolshevik",
+            "imageset": [["kustodiev-the-bolshevik.jpg", "The Bolshevik, by Kustodiev"]],
+            "icon": "swordsicon",
+            "coordinates": [51.6,29.7]
+        }]
+    },
+    {
+        "subtitle": "The Austro-Hungarian Empire subsequently agreed to a truce on 4 November 1918.",
+        "coordinates": [48.0,17.7]
+    },
+    {
+        "subtitle": "The Allies have forced the Germans to an armistice since Germany had its own revolution that resulted in republic regime.",
+        "focusoncountry": ["germany_big"],
+        "external_link": [{"link": "http://en.wikipedia.org/wiki/German_Revolution_of_1918%E2%80%9319", "text": "Wikipedia: German Revolution 1918-1919"}],
+        "coordinates": [52.5,14.6]
+    },
+    {
+        "header": "Results of WWI",
+        "zoom": 4,
+        "coordinates": [40,20],
+        "subtitle": "The four big empires, German, Russian, Austro-Hungarian and Ottoman Empires have fallen. Germans and Russians have lost substantial territory during the war.",
+        "focusoncountry": ["austria_bigger", "germany_big", "russia2", "ottoman_empire"]
+    },
+    {
+        "subtitle": "The other implication of the war was the foundation of League of Nations to maintain peace. Although it failed in this duty, it can be considered the ancestor of today's United Nations."
+    },
+    {
+        "subtitle": "Industrial Revolution was an important factor. Countries such as France and Great Britain had formed colonies in parts of Africa and Asia to meet their raw material demands. Their quantities of production were growing rapidly.",
+        "header": "Industrial Revolution",
+        "focusoncountry": ["france_big", "great_britain"],
+        "coordinates": [48.949902, 2.375022],
+        "date": "1780-1820",
+        "markers": [{
+            "coordinates": [52.145605, -1.184548],
+            "icon": "factoryicon",
+            "imageset": [["industrial-revolution-factory-boys.jpg", "The need for labor force to operate factories resulted in the introduction of child labor."]],
+            "text": "The need for labor force to operate factories resulted in the introduction of child labor."      
+        },
+        {
+            "coordinates": [48.949902, 2.375022],
+            "icon": "factoryicon",
+            "imageset": [["industrial-revolution-france.jpg", ""]],
+            "text": ""
+        }],
+        "external_link": [{"link": "http://en.wikipedia.org/wiki/Industrial_Revolution", "text": "Wikipedia: Industrial Revolution"}]
+    }
+]

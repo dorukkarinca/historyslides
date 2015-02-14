@@ -1,0 +1,292 @@
+<html>
+<head>
+	<link href="editor.css" rel="stylesheet" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="jsoneditor.min.js"></script>
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/foundation/5.0.2/css/foundation.min.css">
+    <script src="download.js"></script>
+</head>
+
+<body>
+	<div id="topbar">
+    <ul id="menubar">
+        <li class="linav" style="font-size: 20px;">Interactive WWI</li>
+        <li class="linav"><a class="navigation" href="/index.html">Switch to Slideshow</a></li>
+        <li class="linav"><a class="navigation" target="_blank" href="/about/about.html">About the Developer</a></li>
+        <li class="linav"><input type="file" id="fileselector"></li>
+    </ul>
+	</div>
+
+    
+	<div id="editor_holder">
+
+    <p>Start making your own slides! Click "Add Slide" to get started. Click "Download" when you're done, and upload it within the slideshow mode.<br>
+    You can also make edits on your existing file by uploading it with the button above, and then downloading it back.</p>
+
+    </div>
+    <button id="download">Download</button>
+
+<script type="text/javascript">
+
+	var element = document.getElementById("editor_holder");
+	var editor = new JSONEditor(element,{
+		"ajax": true,
+		"theme": "foundation5",
+		"schema": {
+			"type": "array",
+			"title": "Slides",
+			"format": "tabs",
+			"items": {
+				"title": "Slide",
+				"type": "object",
+				"headerTemplate": "Slide {{i}}",
+				"properties": {
+        "subtitle": {
+            "type": "string",
+            "title": "Subtitle (Required)"
+        },
+        "coordinates": {
+            "type": "string",
+            "title": "Coordinates (Required)",
+            "description": "Coordinates to pan the map to. [Latitude, Longtitude] Use dot as the decimal point, and comma as the separator.",
+            "default": "[36.50004,38.987991]"
+        },
+        "zoom": {
+            "type": "integer",
+            "default": 5,
+            "title": "Zoom Level (Optional)"
+        },
+        "date": {
+            "type": "string",
+            "title": "Date",
+            "description": "In the form [26,9,1916] or as plain text of your choice. Pay attention to square brackets for dates.",
+            "default": "[26,9,1916]"
+        },
+        "header": {
+            "type": "string",
+            "description": "Optionally specify a header that appears for two seconds at the top of the screen.",
+            "title": "Header (Optional)"
+        },
+        "focusoncountry": {
+            "type": "array",
+            "format": "table",
+            "uniqueItems": true,
+            "items": {
+                "type": "string",
+                "title": "country",
+                "enum": ["Austria", "Belgium", "Bosnia", "Bulgaria", "Denmark", "France", "Germany", "Great Britain", "Greece", "Italy", "Luxembourg", "Netherlands", "Norway", "Ottoman Empire", "Portugal", "Romania", "Russia", "Serbia", "Spain", "Sweden", "Switzerland"]
+            },
+            "description": 'Hold CTRL for multiple selection. If unwanted, uncheck this feature at the "object properties" button above. ',
+            "title": "Countries to color (Uncolored countries will be gray.)"
+        },
+        "markers": {
+            "type": "array",
+            "format": "tabs",
+            "title": "Markers (optional)",
+            "description": "Add markers, and optionally make text/images appear when clicked on them.",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "coordinates": {
+                        "type": "string",
+                        "title": "Coordinates",
+                        "default": "[36.50004,38.987991]"
+                    },
+                    "text": {
+                        "type": "string",
+                        "default": "Descriptive text for the marker popup."
+                    },
+                    "imageset": {
+                        "type": "array",
+                        "format": "table",
+                        "title": "Images",
+                        "uniqueItems": true,
+                        "items": {
+                            "type": "object",
+                            "format": "table",
+                            "properties": {
+                                "link": {
+                                    
+                                    "type": "string",
+                                    "default": "image.jpg"
+                                },
+                                "text": {                               
+                                    "type": "string",
+                                    "default": "Image description."
+                                }
+                            }
+                        }
+                    },
+
+                    "icon": {
+                        "type": "string",
+                        "enum": ["swordsicon", "swordsiconlight", "swordsiconwhite", "cannonicon", "cannoniconlight", "cannoniconwhite", "factoryicon", "factoryiconlight", "factoryiconwhite", "mineicon", "mineiconlight", "mineiconwhite"]                    
+                    },
+                    "header": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "external_link": {
+                "type": "array",
+                "format": "table",
+                "title": "External links (optional)",
+                "description": "Optionally display links to external resources for the particular slide.",
+                "items": {
+                "type": "object",
+                    "properties": {
+                    "link": {
+                        "type": "string",
+                        "default": "http://en.wikipedia.org/wiki/Dog"
+                    },
+                    "text": {
+                        "type": "string",
+                        "default": "Wikipedia: Dogs"
+                    }
+                }
+                }
+        }
+    }
+			}
+		}
+	});
+
+var uploadedJson;
+var resultJson = [];
+var fileSelector = document.getElementById("fileselector");
+
+var appendToEditor = function(){
+
+    console.log("resultJson.length: " + resultJson.length);
+
+    editor.setValue(resultJson);
+}
+
+
+fileselector.addEventListener("change", function(e){
+    var file = fileSelector.files[0];
+
+    try{
+        var reader = new FileReader();
+        reader.onload = function(e){
+            uploadedJson = reader.result;
+            try{resultJson = JSON.parse(uploadedJson);} catch(err){console.log(err);}
+            appendToEditor();
+            console.log(resultJson[0]);
+        }
+        reader.readAsText(file);
+    }
+    catch(err){
+        console.log(err);
+    }
+});
+
+var countrylist = ["austria_bigger", "belgium", "bosnia", "bulgaria", "denmark", "france_big", "germany_big", "great_britain", "greece", "italy", "luxembourg", "netherlands", "norway", "ottoman_empire", "portugal", "romania", "russia2", "serbia", "spain", "sweden", "switzerland"];
+
+$("#download").on("click", function(){
+
+    try {
+        editor.validate();
+    }
+    catch(err){
+        console.log(err);
+       // break;
+    }
+    console.log(editor.getValue());
+    resultJson = editor.getValue();
+    
+    for(var a = 0; a<resultJson.length; a++){
+
+        if(resultJson[a].hasOwnProperty("extensional")){
+            var extensional = resultJson[a]["extensional"];
+            resultJson[a] = {"extensional": extensional};
+        }
+
+        for(var prop in resultJson[a]){
+            if(resultJson[a].hasOwnProperty(prop)){
+                if(resultJson[a][prop] == null || resultJson[a][prop] == "" || resultJson[a][prop] == [] ){
+                    delete resultJson[a][prop];
+                    console.log("Cleared a dead feature!");
+                } 
+            }
+        }
+
+
+        if(resultJson[a].hasOwnProperty("coordinates")){
+            resultJson[a]["coordinates"] = resultJson[a]["coordinates"].replace("[","");
+            resultJson[a]["coordinates"] = resultJson[a]["coordinates"].replace("]","");
+            resultJson[a]["coordinates"] = resultJson[a]["coordinates"].split(",", 2);     
+        }
+
+        if(resultJson[a].hasOwnProperty("date")){
+            resultJson[a]["date"] = resultJson[a]["date"].replace("[","");
+            resultJson[a]["date"] = resultJson[a]["date"].replace("]","");
+            resultJson[a]["date"] = resultJson[a]["date"].split(",", 3);
+        }      
+
+        if(resultJson[a].hasOwnProperty("focusoncountry")){
+            if(resultJson[a]["focusoncountry"] !== []){
+                for(var x = 0; x<resultJson[a]["focusoncountry"].length; x++){
+                    switch(resultJson[a]["focusoncountry"][x]){
+                        case "Austria": resultJson[a]["focusoncountry"][x] = "austria_bigger"; break;
+                        case "Belgium": resultJson[a]["focusoncountry"][x] = "belgium"; break;
+                        case "Bosnia": resultJson[a]["focusoncountry"][x] = "bosnia"; break;
+                        case "Bulgaria": resultJson[a]["focusoncountry"][x] = "bulgaria"; break;
+                        case "Denmark": resultJson[a]["focusoncountry"][x] = "denmark"; break;
+                        case "France": resultJson[a]["focusoncountry"][x] = "france_big"; break;
+                        case "Germany": resultJson[a]["focusoncountry"][x] = "germany_big"; break;
+                        case "Great Britain": resultJson[a]["focusoncountry"][x] = "great_britain"; break;
+                        case "Greece": resultJson[a]["focusoncountry"][x] = "greece"; break;
+                        case "Italy": resultJson[a]["focusoncountry"][x] = "italy"; break;
+                        case "Luxembourg": resultJson[a]["focusoncountry"][x] = "luxembourg"; break;
+                        case "Netherlands": resultJson[a]["focusoncountry"][x] = "netherlands"; break;
+                        case "Norway": resultJson[a]["focusoncountry"][x] = "norway"; break;
+                        case "Ottoman Empire": resultJson[a]["focusoncountry"][x] = "ottoman_empire"; break;
+                        case "Portugal": resultJson[a]["focusoncountry"][x] = "portugal"; break;
+                        case "Romania": resultJson[a]["focusoncountry"][x] = "romania"; break;
+                        case "Russia": resultJson[a]["focusoncountry"][x] = "russia2"; break;
+                        case "Serbia": resultJson[a]["focusoncountry"][x] = "serbia"; break;
+                        case "Spain": resultJson[a]["focusoncountry"][x] = "spain"; break;
+                        case "Sweden": resultJson[a]["focusoncountry"][x] = "sweden"; break;
+                        case "Switzerland": resultJson[a]["focusoncountry"][x] = "switzerland"; break;
+                        default: alert("An error has occurred. Please try again later.");
+                    }
+                }
+            } else {
+                delete resultJson[a]["focusoncountry"];
+                console.log("for in statement not that efficient.");
+            }
+        }
+
+        
+
+        if(resultJson[a].hasOwnProperty("markers")){
+            if(resultJson[a]["markers"] !== []){
+                for (var l = 0; l<resultJson[a]["markers"].length; l++){
+
+                    resultJson[a]["markers"][l]["coordinates"] = resultJson[a]["markers"][l]["coordinates"].replace("[","");
+                    resultJson[a]["markers"][l]["coordinates"] = resultJson[a]["markers"][l]["coordinates"].replace("]","");
+                    console.log("Are the brackets gone? " + resultJson[a]["markers"][l]["coordinates"]);
+                    resultJson[a]["markers"][l]["coordinates"] = resultJson[a]["markers"][l]["coordinates"].split(",",2);
+                }     
+            } else {
+               resultJson[a]["markers"] = undefined; 
+            }                      
+        }
+
+        
+        
+    }
+
+    download(JSON.stringify(resultJson), "slides.txt", "text/plain");
+
+});
+
+
+
+
+
+</script>
+</body>
+</html>

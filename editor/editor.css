@@ -1,0 +1,55 @@
+body {
+    overflow-x: hidden;
+}
+
+#topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2rem;
+    width: 100%;
+    background-color: black;
+    z-index: 900;
+}
+#fileselector {
+    display: inline;
+    top: 10%;
+    z-index: 899;
+    position: absolute;
+}
+#menubar {
+    position: relative;
+    list-style-type: none;
+    margin: 0px;
+    height: 100%;
+}
+.linav{
+    text-decoration: none;
+    display: inline;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+    font-family: Georgia;
+}
+
+.navigation{
+    text-decoration: none;
+    color: white;
+}
+
+#editor_holder {
+    position: relative;
+    top: 4rem;
+    left: 3rem;
+    width: 100%;
+    text-align: justify;
+}
+
+#download{
+    bottom: 10px;
+    right: 10px;
+    position: fixed;
+    display: inline-block;
+}
+

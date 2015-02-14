@@ -1,0 +1,1494 @@
+<!--time to revise-->
+
+<!DOCTYPE html>
+
+<META http-equiv=content-type content=text/html;charset=iso-8859-9>
+<META http-equiv=content-type content=text/html;charset=windows-1254>
+<META http-equiv=content-type content=text/html;charset=x-mac-turkish>
+
+<html>
+<head>
+
+
+<!--<script src='jquery-1.11.1.min.js'></script>-->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<!--<script src='nprogress.js'></script>
+<link href='/nprogress.css' rel='stylesheet' />-->
+
+
+<!--<script src='/dragdealer.js'></script>
+<link href='/dragdealer.css' rel='stylesheet' />-->
+
+<script src="lightbox/js/lightbox.min.js"></script>
+<link href="lightbox/css/lightbox.css" rel="stylesheet" />
+<!--<script src='//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.js'></script>
+<link href='//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.css' rel='stylesheet' /> -->
+
+<script src='mapbox/mapbox.js'></script>
+<link href='mapbox/mapbox.css' rel='stylesheet' />
+
+<!--<script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.0.1/leaflet-omnivore.min.js'></script>-->
+<script src='mapbox/leaflet-omnivore.min.js'></script>
+
+
+<!--<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>-->
+<!--<script src="http://d3js.org/topojson.v1.min.js"></script>-->
+<script src="mapbox/topojson.v1.min.js"></script>
+
+<!--<script src='/ottoman_empire.geojson' type='text/javascript'></script>-->
+
+<!--<script src='https://github.com/calvinmetcalf/leaflet-ajax/blob/master/src/GeoJSON.js'></script>
+<script src='https://github.com/calvinmetcalf/leaflet-ajax/blob/master/src/ajax.js'></script>
+<script src='https://github.com/calvinmetcalf/leaflet-ajax/blob/master/src/jsonp.js'></script>
+<script src='https://github.com/calvinmetcalf/leaflet-ajax/blob/master/src/promise.js'></script>-->
+
+<!--<script src='all_with_attributes.js'></script>-->
+<script src='topotest.js'></script>
+
+<!--
+<script src='austria_bigger.js'></script>
+<script src='belgium.js'></script>
+<script src='bosnia.js'></script>
+<script src='bulgaria.js'></script>
+<script src='denmark.js'></script>
+<script src='france_big.js'></script>
+<script src='germany_bigger.js'></script>
+<script src='great_britain.js'></script>
+<script src='greece.js'></script>
+<script src='italy_bigger.js'></script>
+<script src='netherlands.js'></script>
+<script src='ottoman_empire_biggest.js'></script>
+<script src='portugal.js'></script>
+<script src='romania.js'></script>
+<script src='russia2.js'></script>
+<script src='serbia.js'></script>
+<script src='spain.js'></script>
+<script src='switzerland.js'></script>
+<script src='ottoman_islands.js'></script>
+-->
+
+
+<script src='leaflet.label.js'></script>
+<script src='styleandadd2.js'></script>
+<script src='z_labels.js'></script>
+
+
+  <!--[if lte IE 8]>
+    <link href='//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.ie.css' rel='stylesheet' />
+  <![endif]-->
+
+<style>
+
+@charset "UTF-16";
+
+body { margin:0; padding:0; }
+#map {
+position: fixed;
+display: block;
+/*top: 0;
+bottom: 0;*/
+left: 0;
+right: 0;
+width: 100%;
+height: 100%;
+top: 2rem;
+bottom: 0;
+z-index: 50;
+}
+#topbar {
+    display: block;
+    position: fixed;
+    top: 0;
+    height: 2rem;
+    width: 100%;
+    background-color: black;
+    z-index: 900;
+}
+#z {
+    top: 10px;
+    left: 80px;
+    position: absolute;
+    z-index: 100;
+}
+#zoom-bar {
+    width: 200px;
+    position: relative;
+    height: 30px;
+    background: #FFF;
+    border: 1px solid #BBB;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+/*
+.dragdealer .handle {
+    position: absolute;
+    cursor: pointer;
+    width: 100px;
+    height: 30px;
+    background: #222;
+    color: #fff;
+    font-weight: bold;
+    line-height: 30px;
+    text-align: center;
+}
+*/
+
+.popup {
+    text-align: center;
+}
+.popup .cycle {
+    height: 30px;
+    margin-top: 5px;
+    padding-top: 5px;
+}
+.popup .cycle a.prev {
+    float: left;
+}
+.popup .cycle a.next {
+    float: right;
+}
+/*
+#subtitleholder{
+    position: absolute;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+}
+*/
+#headerholder{
+    position: relative;
+    top: 3rem;
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+    vertical-align: top;
+    user-select: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+#header {
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgb(0,0,0);
+    background-color: rgb(0,0,0);
+    color: rgb(255,255,255);
+    position: relative;
+    top: 0rem;
+    text-align: center;
+    font-family: Georgia;
+    font-size: 26px;
+    font-weight: bold;
+    margin-left: auto;
+    margin-right: auto;
+    vertical-align: top;
+    width: 100%;
+    z-index: 600;
+    display: none;
+}
+
+.external_link {
+    position: absolute;
+    display: none;
+    top: 5px;
+    right: 5px;
+    width: 300px;
+    background-color: black;
+    z-index: 555;
+}
+
+.external_link_text {
+    text-decoration: none;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-family: Georgia;
+    font-size: 15px;
+    color: white;
+    text-align: justify;
+}
+
+.external_link_text_href {
+    text-decoration: none;
+    color: white;
+    text-align: justify;
+}
+
+#external_link_holder{
+    top: 2rem;
+}
+
+#subtitle{
+    background-color: rgb(0,0,0);
+    position: relative;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+th{
+    margin-right: auto;
+    margin-left: auto;
+    vertical-align: middle;
+    font-family: Georgia;
+    font-size: 20px;
+    /*display: block;*/
+    color: rgb(255,255,255);
+}
+
+#subholder{
+    position: fixed;
+    /*border: 5px solid black;*/
+    height: 200px;
+    width: 90%;
+    bottom: 0px;
+    margin-left: 5%;
+    margin-right: 5%;
+    z-index: 500;
+    pointer-events: none;
+}
+
+.butt {
+background: #000000;
+color: #ffffff;
+font-family: "Times New Roman",Georgia;
+width: 100px;
+height: 30px;
+border: 0px;
+font-size: 20px;
+}
+
+#next {
+    position: relative;
+    float: right;
+    display: block;
+    margin-left: 25px;
+    pointer-events: auto;
+}
+#previous {
+    position: relative;
+    float: left;
+    display: block;
+    margin-right: 25px;
+    pointer-events: auto;
+}
+
+.leaflet-div-icon{
+    font-family: Georgia;
+    font-size: 10px;
+    text-align: center;
+}
+
+.country-label{
+    font-family: Georgia;
+    font-size: 10px;
+}
+
+#range-slider{
+display: block;
+position: fixed;
+bottom: 30px;
+margin-left: 5%;
+margin-right: 5%;
+left: 0px;
+margin-top: 25px;
+height: 10px;
+width: 90%;
+z-index: 999;
+    user-select: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -webkit-touch-callout: none;
+pointer-events: auto;
+}
+
+meta.foundation-data-attribute-namespace {
+  font-family: false; }
+
+input[type="range"]{
+    background: #000000;
+    width: 130px;
+    height: 6px;
+    -webkit-appearance: none;
+    border-radius: 0px;
+    -moz-border-radius: 0px;
+    -wekkit-border-radius: 0px;
+}
+
+
+input[type="range"]::-webkit-slider-thumb{
+   -webkit-appearance:none !important;  
+   width:25px;
+   height:15px;
+   -webkit-appearance: none;
+    border-radius: 0px;
+    -moz-border-radius: 0px;
+    -wekkit-border-radius: 0px;
+    border:1px solid black;
+    background: #ffffff;
+ }
+
+ #datebox {
+    display: none;
+    top: 30%;
+    position: fixed;
+    width: 30%;
+    height: 200px;
+    margin-left: 35%;
+    margin-right: 35%;
+    background: #000000;
+    border-radius: 5px;
+    z-index: 500;
+ }
+
+#year {
+    text-align: center;
+    font-family: Georgia;
+    font-size: 75px;
+    z-index: 501;
+    color: rgb(255,255,255);
+}
+#daymonth {
+    position: relative;
+    bottom: -40px;
+    text-align: center;
+    font-family: Georgia;
+    font-size: 35px;
+    z-index: 502;
+    color: rgb(255,255,255);
+}
+
+#subtitleholder{
+    height: 140px;
+    width: 100%;
+    position: relative;
+    top: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+    vertical-align: bottom;
+    user-select: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+#subdiv{
+    display: table-cell;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 100%;
+    padding: 0;
+    vertical-align: bottom;
+}
+
+#nextdiv{
+    display: table-cell;
+    vertical-align: bottom;
+}
+#previousdiv{
+    display: table-cell;
+    vertical-align: bottom;
+}
+
+.popupimagecontainer {
+    display: inline;
+    height: 100px;
+    width: 100%;
+    margin: 5px;
+}
+
+.popupimage{
+    display: block;
+    height: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.popupdiv {
+    height: 100%;
+}
+
+.popupText {
+    margin-left: 5px;
+    text-align: justify;
+}
+
+.popupHeader{
+    margin-left: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#fileselector {
+    display: inline;
+    top: 10%;
+    z-index: 899;
+    position: absolute;
+}
+#menubar {
+    position: relative;
+    list-style-type: none;
+    margin: 0px;
+    padding: 6px 0px;
+    height: 100%;
+}
+li{
+    text-decoration: none;
+    display: inline;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-family: Georgia;
+}
+
+li a{
+    text-decoration: none;
+    color: white;
+}
+
+</style>
+
+
+</head>
+
+<body>
+<div id="map"></div>
+<div id="topbar">
+    <ul id="menubar">
+        <li style="font-size: 20px;">Interactive WWI</li>
+        <li><a href="/editor/editor.html">Switch to Editor</a></li>
+        <li><a target="_blank" href="/about/about.html">About the Developer</a></li>
+        <li><input type="file" id="fileselector"></li>
+    </ul>
+</div>
+
+<div id="external_link_holder"></div>
+
+
+
+<!--<div id='z'>
+    <div id='zoom-bar' class='dragdealer'>
+        <div id='handle' class="handle">0</div>
+    </div>
+</div>-->
+
+<div id='headerholder'>
+    <div id='header'>Header</div>
+</div>
+
+<div id="subholder">
+
+    <div id="subtitleholder">
+
+        <div id="previousdiv">
+            <button class="butt" id="previous" onClick="previous()">&laquo; Prev</button>
+        </div> 
+
+        <div id="subdiv">
+            <table id="subtitle" align="center">
+            <tr><th id="subtext"></th></tr>
+            </table>
+        </div>
+
+        <div id="nextdiv">
+            <button class="butt" id="next" onClick="next()">Next &raquo;</button>
+        </div>
+
+    </div>
+
+    <input id="range-slider" type="range" />
+</div>
+
+
+
+<div id="datebox">
+    <div id="year">1914</div>
+    <div id="daymonth">1 January</div>
+</div>
+<!--
+<div class="range-slider" data-slider data-options="start: 1; end: 10;">
+  <span class="range-slider-handle"></span>
+  <span class="range-slider-active-segment"></span>
+  <input type="hidden">
+</div>
+-->
+
+<script type='text/javascript'>
+/*
+ $(function(){
+    
+        var iFrames = $('popupdiv');
+      
+        function iResize() {
+        
+            for (var i = 0, j = iFrames.length; i < j; i++) {
+              iFrames[i].style.height = iFrames[i].contentWindow.document.body.offsetHeight + 'px';}
+            }
+            
+            if ($.browser.safari || $.browser.opera) { 
+            
+               iFrames.load(function(){
+                   setTimeout(iResize, 0);
+               });
+            
+               for (var i = 0, j = iFrames.length; i < j; i++) {
+                    var iSource = iFrames[i].src;
+                    iFrames[i].src = '';
+                    iFrames[i].src = iSource;
+               }
+               
+            } else {
+               iFrames.load(function() { 
+                   this.style.height = this.contentWindow.document.body.offsetHeight + 'px';
+               });
+            }
+        
+        });
+*/
+
+function arraysEqual(arr1, arr2) {
+if(arr1 === null && arr2 === null) return true;
+if((arr1 instanceof Array && arr2 instanceof Array) === false) return false;
+    if(arr1.length !== arr2.length)
+        return false;
+    for(var i = arr1.length; i--;) {
+        if(arr1[i] !== arr2[i])
+            return false;
+    }
+    return true;
+}
+
+function arrayContains(array, value){ //checks if any element in array contains value. Returns index of array in which value is found.
+    var i;
+    for (i=0; i<array.length; i++){
+        if(array[i] == value) return i;
+    }
+    return -1;
+}
+
+var uploadedJson;
+var resultJson = new Array();
+var fileSelector = document.getElementById("fileselector");
+
+fileselector.addEventListener("change", function(e){
+    var file = fileSelector.files[0];
+
+    try{
+        var reader = new FileReader();
+        reader.onload = function(e){
+            uploadedJson = reader.result;
+            try{resultJson = JSON.parse(uploadedJson);} catch(err){console.log(err);}
+            appendSlideShow();
+        }
+        reader.readAsText(file);
+
+        
+    }
+    catch(err){
+        console.log(err);
+    }
+});
+
+var appendSlideShow = function(){
+    debugger;
+    theslideshow = resultJson;
+    initializeSlider();
+    gotoslide(0);
+}
+
+
+
+var map = L.mapbox.map('map', '', {"keyboard": false, "minZoom": 3, "maxZoom": 7});
+var handle = document.getElementById('handle');
+
+var layer1 = L.tileLayer("tiles/{z}/{x}/{y}.png").addTo(map);
+//var gridlayer1 = L.mapbox.gridLayer('dorruk.theproject').addTo(map);
+var markerHolderLayer;
+var markerHolderArray = new Array();
+//map.addControl(L.mapbox.gridControl(gridlayer1));
+
+
+
+var markers = [];
+map.setView([40.2031, 50.0642], 3);
+
+var subtitle = document.getElementById("subtitle");
+var subtext = document.getElementById("subtext");
+var subholder = document.getElementById("subholder");
+var next_button = document.getElementById("next");
+var previous_button = document.getElementById("previous");
+var lightboxhtmlelement = document.getElementById("lightbox");
+
+subholder.style.display = "inline";
+
+
+var swordsIcon = L.icon({
+iconUrl: "swords-icon.png", //Pointing these URLs into a folder doesn't work :(
+iconSize: [32,37]
+});
+var swordsIconLight = L.icon({
+iconUrl: "swords-icon-light.png",
+iconSize: [32,37]
+});
+var swordsIconWhite = L.icon({
+iconUrl: "swords-icon-white.png",
+iconSize: [32,37]
+});
+var cannonIcon = L.icon({
+iconUrl: "cannon-icon.png",
+iconSize: [32,37]
+});
+var cannonIconLight = L.icon({
+iconUrl: "cannon-icon-light.png",
+iconSize: [32,37]
+});
+var cannonIconWhite = L.icon({
+iconUrl: "cannon-icon-white.png",
+iconSize: [32,37]
+});
+var factoryIcon = L.icon({
+iconUrl: "factory-icon.png",
+iconSize: [32,37]
+});
+var factoryIconLight = L.icon({
+iconUrl: "factory-icon-light.png",
+iconSize: [32,37]
+});
+var factoryIconWhite = L.icon({
+iconUrl: "factory-icon-white.png",
+iconSize: [32,37]
+});
+var mineIcon = L.icon({
+iconUrl: "mine-icon.png",
+iconSize: [32,37]
+});
+var mineIconLight = L.Icon({
+iconUrl: "mine-icon-light.png",
+iconSize: [32,37]
+});
+var mineIconWhite = L.Icon({
+iconUrl: "mine-icon-white.png",
+iconSize: [32,37]
+});
+var currShow = -1;
+
+var theslideshow = [ //The demo slideshow. On the webpage, uploading a txt file containing a JSON will change this variable to that JSON.
+    {
+        "subtitle": "You are viewing the Interactive Slideshow of World War I. Press next to begin, or slide forward using the slider below."
+    },
+    {
+        "coordinates": [40,20],
+        "fadetogray": true,
+        "subtitle": "This is an approximate view of Europe in the year of 1900.",
+        "header": "Introduction",
+        "zoom": 4,
+        "date": [0,0,1900],
+        "external_link": [{
+            "link": "http://en.wikipedia.org/wiki/Europe#20th_century_to_the_present",
+            "text": "Wikipedia: Europe from 20th century to the present"
+        }]
+    },
+    {
+        "extensional": "About every European country had its own reasons to start a war, reasons that date back up to the 18th century."
+    },
+    {
+        "subtitle": "French Revolution inspired nations living under the rule of an empire to declare their own sovereignty.",
+        "date": [14,7,1789],
+        "markers": [{
+            "coordinates": [48.949902, 2.375022],
+            "header": "Storming of the Bastille",
+            "text": "One of the iconic paintings depicting the French Revolution was Storming of the Bastille. <b>Click on any image to zoom. Click on water or the top right corner to dismiss popups.</b>",
+            "icon": "cannonicon",
+            "openpopup": true,
+            "imageset": [{"link": "Prise_de_la_Bastille.jpg", "text": "Storming of the Bastille"}]
+        }],
+        "coordinates": [50.949902, 2.375022],
+        "header": "French Revolution",
+        "external_link": [{"link": "http://en.wikipedia.org/wiki/French_revolution", "text": "Wikipedia: French Revolution"}]
+    },
+    {
+        "date": "1878",
+        "coordinates": [43.8, 23.1],
+        "subtitle": "Balkan countries are good examples. These countries have been part of the Ottoman Empire for more than 400 years.",
+        "focusoncountry": ["greece", "austria_bigger", "italy", "switzerland", "france_big", "spain", "portugal", "belgium", "netherlands","germany_big", "russia2", "great_britain"],
+        "zoom": 6
+    },
+    {
+        "date": "1867",
+        "subtitle": "Serbians rose for a revolution that lasted 10 years and gained autonomy. Eventually, they gained full independence in 1867.",
+        "external_link": [{"link": "http://en.wikipedia.org/wiki/Serbia#Revolution_and_independence", "text": "Serbia: Revolution and Indepence"}],
+        "focusoncountry": ["greece", "austria_bigger", "italy", "switzerland", "france_big", "spain", "portugal", "belgium", "netherlands","germany_big", "russia2", "great_britain", "serbia"],
+        "zoom": 6        
+    },
+    {
+        "date": "1878",
+        "subtitle": "Romania followed that in 1878.",
+        "external_link": [{"link": "http://en.wikipedia.org/wiki/Romania#Independence_and_monarchy", "text": "Romania: Independence and monarchy"}],
+        "focusoncountry": ["greece", "austria_bigger", "italy", "switzerland", "france_big", "spain", "portugal", "belgium", "netherlands","germany_big", "russia2", "great_britain", "serbia", "romania"],
+        "zoom": 6   
+    },
+    {
+        "date": "1908",
+        "subtitle": "And Bulgaria by 1908.",
+        "external_link": [{"link": "http://en.wikipedia.org/wiki/Bulgaria#Third_Bulgarian_state", "text": "Bulgaria: Third Bulgarian state"}],
+        "focusoncountry": ["greece", "austria_bigger", "italy", "switzerland", "france_big", "spain", "portugal", "belgium", "netherlands","germany_big", "russia2", "great_britain", "serbia", "romania", "bulgaria"],
+        "zoom": 6   
+    },
+    {
+        "subtitle": "But for the time being, that's just another matter. Let's look into reasons other than nation independence that ignited the WWI.",
+        "date": "1900"
+    },        
+    {
+        "subtitle": "Industrial Revolution was an important factor. Countries such as France and Great Britain had formed colonies in parts of Africa and Asia to meet their raw material demands. Their quantities of production were growing rapidly.",
+        "header": "Industrial Revolution",
+        "focusoncountry": ["france_big", "great_britain"],
+        "coordinates": [48.949902, 2.375022],
+        "date": "1780-1820",
+        "markers": [{
+            "coordinates": [52.145605, -1.184548],
+            "icon": "factoryicon",
+            "imageset": [{"link": "industrial-revolution-factory-boys.jpg", "text": "The need for labor force to operate factories resulted in the introduction of child labor."}],
+            "text": "The need for labor force to operate factories resulted in the introduction of child labor."      
+        },
+        {
+            "coordinates": [48.949902, 2.375022],
+            "icon": "factoryicon",
+            "imageset": [{"link": "industrial-revolution-france.jpg", "text": ""}],
+            "text": ""
+        }],
+        "external_link": [{"link": "http://en.wikipedia.org/wiki/Industrial_Revolution", "text": "Wikipedia: Industrial Revolution"}]
+    },
+    {
+        "subtitle": "Germany was uneasy about this situation. Having recently stabilized its political affairs, it had very few colonies compared to its economically powerful neighbors, France and Great Britain.",
+        "date": "1780-1820",
+        "focusoncountry": ["germany_big"],
+        "coordinates": [50,15],
+        "zoom": 5,
+        "date": "1780-1820",
+        "markers": [{
+            "coordinates": [52.145605, -1.184548],
+            "icon": "factoryicon",
+            "imageset": [{"link": "industrial-revolution-factory-boys.jpg", "text": "The need for labor force to operate factories resulted in the introduction of child labor."}],
+            "text": "The need for labor force to operate factories resulted in the introduction of child labor."
+        },
+        {
+            "coordinates": [48.949902, 2.375022],
+            "icon": "factoryicon",
+            "imageset": [{"link": "industrial-revolution-france.jpg", "text": ""}],
+            "text": ""
+        }]
+    },
+    {
+        "extensional": "Thus, Germany could make use of a war to claim their colonies. Otherwise it couldn't be able to catch up with its fast-growing neighbors."
+    },
+    {
+        "subtitle": "Another affair between Germany and France originated from the coal mine lying in a territory called Alsace-Lorraine. This mine is bordering to France and Germany.",
+        "date": "1780-1820",
+        "markers": [{
+            "coordinates": [48.241057, 7.191803],
+            "icon": "mineicon",
+            "openpopup": true,
+            "text": "Miners working at Alsace-Lorraine.",
+            "imageset": [{"link": "alsace-lorraine-mining.jpg", "text": "Miners working at Alsace-Lorraine"}]
+        }]
+    },
+    {
+        "extensional": "As you might guess, both countries were claiming the mine as their own. Coal mining was very important at the time because it provided the energy needed to operate the Industrial Age factories, ships and trains.",
+        "markers": [{
+            "coordinates": [48.241057, 7.191803],
+            "icon": "mineicon",
+            "openpopup": true,
+            "text": "Miners working at Alsace-Lorraine.",
+            "imageset": [{"link": "alsace-lorraine-mining.jpg","text": "Miners working at Alsace-Lorraine"}]
+        }]
+    }, 
+    {
+        "focusoncountry": ["russia2"],
+        "coordinates": [51.645294049305406,29.70703125],
+        "date": "1780-1820",
+        "subtitle": "Russia, ruled by tsardom at the time, had always been looking for means to reach the Meditterranean Sea, but the Ottoman Empire was in the way.",
+        "date": [5,6,1918]
+    },
+    {
+        "extensional": "However, Russia was not prepared for the war, and the Tsar wanted to overrule the army for the war. The public was uneasy about the situation. A potential inner crisis for Russia was at hand."
+    },
+    {
+        "subtitle": "This was the state of Europe as the First World War was approaching.",
+        "coordinates": [40, 20],
+        "zoom": 4,
+        "date": [7,8,1920]
+    },
+    {
+        "header": "Into The War",
+        "date": [28,6,1914],
+        "subtitle": "In 1914, The Archduke of Austria, Franz Ferdinand was assassinated by a Serbian nationalist.",
+        "coordinates": [47.8, 20.1],
+        "focusoncountry": ["austria_bigger"],
+        "external_link": [{"link": "http://en.wikipedia.org/wiki/Assassination_of_Archduke_Franz_Ferdinand_of_Austria", "text": "Wikipedia: Assassination of Franz Ferdinand"}]
+    },
+    {
+        "date": [0,8,1914],
+        "subtitle": "As Austro-Hungarians declared war on Serbia and Russia mobilized, Germany took advantage of the ignition of the war and invaded Belgium and Luxembourg, although those countries had chosen to remain neutral.",
+        "focusoncountry": ["germany_big", "luxembourg", "belgium"],
+        "coordinates": [49.78473, 11.09123]
+    },
+    {
+        "date": [0,8,1914],
+        "subtitle": "Consequently, Great Britain took side against Germany. Germany moved on to invade France, and the Western Front was opened.",
+        "focusoncountry": ["germany_big", "luxembourg", "belgium", "great_britain"],
+        "coordinates": [51.78473, 11.09123]
+    },
+    {
+        "header": "Western Front",
+        "external_link": [{"link": "http://en.wikipedia.org/wiki/Western_Front_(World_War_I)", "text": "Wikipedia: Western Front WWI"}],
+        "subtitle": "This front witnessed new technology such as poison gas for the first time.",
+        "focusoncountry": ["germany_big", "luxembourg", "belgium", "great_britain", "france_big"],
+        "coordinates": [49.78473, 11.09123],
+        "markers": [{
+            "header": "Western Front",
+            "coordinates": [49.7, 4.8],
+            "icon": "cannonicon",
+            "openpopup": true,
+            "text": "No significant advances were made in the Western Front. Total casualties are above 1 million.",
+            "imageset": [{"link": "western-front.png", "text": "Western Front trench line in high-res map"}, {"link": "german-soldier-at-western-front.jpg", "text": "German soldier on the Western Front, 1916"}]
+        }]
+    },
+    {
+        "subtitle": "The Russian Army was successful against the Austro-Hungarians, but they were stopped at the East Prussia Invasion by the Germans.",
+        "external_link": [{"link": "http://en.wikipedia.org/wiki/Eastern_Front_(World_War_I)", "text": "Eastern Front WWI"},{"text": "Russian Invasion of East Prussia", "link": "http://en.wikipedia.org/wiki/Russian_invasion_of_East_Prussia_(1914)"}],
+        "coordinates": [53.6,21.4],
+        "markers": [{
+            "header": "Eastern Front",
+            "coordinates": [52.2,24.1],
+            "icon": "cannonicon",
+            "text": "Eastern Front was the frontier between Russian Empire and Romania versus Austro-Hungarian Empire, Bulgaria and Germany.",
+            "imageset": [{"link": "eastern-front-map.gif", "text": "Map of the Eastern Front, before and after 1915"},{"link": "eastern-front-armies-in-a-village.jpg","text": "Armies in a village by the Eastern Front."}]
+        },{
+            "header": "Russian Invasion of East Prussia",
+            "coordinates": [53.6,21.4],
+            "icon": "cannoniconwhite",
+            "text": "Russians were defeated by 320,000 casualties in the East Prussia Invasion.",
+            "imageset": [{"link": "russian-invasion-of-east-prussia-map.jpg", "text": "Map of Russian Invasion of East Prussia"}]
+        }],
+        "date": ["August-September", "1914"]
+    },
+    {
+        "subtitle": "The Ottoman Empire joined the war in November 1914. Its primary goal was to earn back the lost soil in the Balkans.",
+        "date": [0,11,1914],
+        "coordinates": [39.3,32.8]
+    },
+    {
+        "subtitle": "Italy and Bulgaria joined in 1915, Romania in 1916 and the United States in 1917.",
+        "coordinates": [43.1,12.3],
+        "zoom": 4,
+        "focusoncountry": ["italy", "bulgaria", "romania"]
+    },
+    {
+        "subtitle": "In March 1917, the tsardom government of Russia collapsed, and the new Russia switched to the Axis side after the October Revolution.",
+        "coordinates": [51.6,29.7],
+        "marker": [{
+            "header": "The Bolshevik",
+            "imageset": [{"link": "kustodiev-the-bolshevik.jpg", "text": "The Bolshevik, by Kustodiev"}],
+            "icon": "swordsicon",
+            "coordinates": [51.6,29.7]
+        }]
+    },
+    {
+        "subtitle": "The Austro-Hungarian Empire subsequently agreed to a truce on 4 November 1918.",
+        "coordinates": [48.0,17.7]
+    },
+    {
+        "subtitle": "The Allies have forced the Germans to an armistice since Germany had its own revolution that resulted in republic regime.",
+        "focusoncountry": ["germany_big"],
+        "external_link": [{"link": "http://en.wikipedia.org/wiki/German_Revolution_of_1918%E2%80%9319", "text": "Wikipedia: German Revolution 1918-1919"}],
+        "coordinates": [52.5,14.6]
+    },
+    {
+        "header": "Results of WWI",
+        "zoom": 4,
+        "coordinates": [40,20],
+        "subtitle": "The four big empires, German, Russian, Austro-Hungarian and Ottoman Empires have fallen. Germans and Russians have lost substantial territory during the war.",
+        "focusoncountry": ["austria_bigger", "germany_big", "russia2", "ottoman_empire"]
+    },
+    {
+        "subtitle": "The other implication of the war was the foundation of League of Nations to maintain peace. Although it failed in this duty, it can be considered the ancestor of today's United Nations."
+    },
+    {
+        "subtitle": "THE END."
+    }
+];
+
+/* -------------------SLIDER AND DATEBOX-----------------------------*/
+
+var datebox = document.getElementById("datebox");   //Displays when you drag the slider. Normally display: none;
+var slider = document.getElementById("range-slider");   
+var qslider = $("#range-slider"); //QuerySlider
+
+var sliderlength;
+
+var initializeSlider = function(){
+    sliderlength = theslideshow.length - 1;
+    slider.setAttribute("max", sliderlength.toString() );
+    slider.setAttribute("min", "0" );
+    slider.setAttribute("step", "1" );
+    slider.setAttribute("value", "0");
+}
+
+initializeSlider();
+
+
+function monthToString(number){
+    switch(number){
+        case 0: return ""; break;
+        case 1: return "January"; break;
+        case 2: return "February"; break;
+        case 3: return "March"; break;
+        case 4: return "April"; break;
+        case 5: return "May"; break;
+        case 6: return "June"; break;
+        case 7: return "July"; break;
+        case 8: return "August"; break;
+        case 9: return "September"; break;
+        case 10: return "October"; break;
+        case 11: return "November"; break;
+        case 12: return "December"; break;
+        default: return "ERR"; break;
+    }
+}
+
+var downvalue;
+
+qslider.mousedown( function() {
+    datebox.style.display = "inline";
+    downvalue = this.value;
+});
+
+qslider.mouseup( function(){
+    datebox.style.display = "none";
+    if (downvalue !== this.value){
+    currShow = this.value;
+    setSlideShow(currShow);
+    }
+});
+
+var sliderOnChange = function(){
+    var date = theslideshow[this.value]["date"];
+    if(typeof date === "string"){
+        year.innerHTML = date;
+        daymonth.innerHTML = "";
+        return 0;
+    }
+    else if (date[0] === 0){
+        var yearstring = date[2];
+        var datestring = monthToString(date[1]);
+    }
+    else if (date.length === 2){
+        daymonth.innerHTML = date[0];
+        year.innerHTML = date[1];
+    }
+    else if (date.length === 3){
+        var yearstring = date[2];
+        var datestring = date[0] + " " + monthToString(date[1]);       
+    }
+    year.innerHTML = yearstring;
+    daymonth.innerHTML = datestring;
+    return 0;
+}
+
+qslider.change(sliderOnChange);
+slider.addEventListener("input", sliderOnChange, false);
+
+/* ----------------------------------------------------  */
+
+var next = function(){
+    debugger;
+    if (theslideshow.length - 1 > currShow){
+    currShow++;
+    slider.value = currShow;
+    setSlideShow(currShow);
+    return false;
+    }
+    else {
+        console.log("End of slideshow.");
+    }
+    return true;
+};
+
+var previous = function(){
+    if (currShow > 0){
+    currShow--;
+    slider.value = currShow;    
+    setSlideShow(currShow);
+    return false;
+    }
+    console.log("Beginning of slideshow.");
+    return true;
+};
+
+var gotoslide = function(idnum){
+    currShow = idnum;
+    setSlideShow(idnum);
+    slider.value
+};
+
+var noreset = new Array();
+
+
+
+var countryLayerExists = true;
+var currCountry = null;
+
+var mapState = {
+Slidenumber : function() { return currShow; } ,
+CountryFocus : function() { return currCountry; } ,
+ActiveMarkers : new Array(0),
+ActiveHTML : null,
+ActiveExternalLinks: new Array(0)
+};
+
+mapState.ActiveMarkers.length = 0;
+
+var imageNeedsCentering;
+var popupOpenedByCode;
+    map.on("popupopen", function(){ 
+        //The popup images' width are calculated when popup is opened by user click. Then, popup width is set accordingly and popup is reopened.
+        //Thus, popups are made wide enough by css alteration to fit all images on a single line in popup.
+        //This function requires review.
+                            if(popupOpenedByCode){
+                                popupOpenedByCode = false; //Never used but who knows who'll need it.
+                                return 0;
+                            }
+
+                            console.log("Listener working!");
+
+                                var f;
+                                var found;
+
+                            for (f=0; f<markerHolderArray.length; f++){
+                                var popup = markerHolderArray[f].getPopup();
+                                if(popup._isOpen){
+                                    found = f;
+                                    break;
+                                }
+                            }
+
+
+
+                            var targetWidth = 5;
+
+
+                            var $leafletpopupcontainer = $(".popupdiv").parent();
+
+
+                                var getImageWidth = function(){
+                                    $(".popupdiv").find("img").each( function(){
+                                targetWidth += $(this).width();
+                                targetWidth += 10;
+                                    });
+
+                                    var imageArray = $(".popupdiv").find("img");
+                                    console.log(imageArray);
+                                    if(imageArray.length === 0){
+                                        console.log("No images :(");
+                                        targetWidth += 280;
+                                    }
+
+                            targetWidth += 15;
+
+                            if(targetWidth < 280) {
+                                targetWidth = 300;
+                                imageNeedsCentering = true;
+                            }
+                                }
+                            
+                            setTimeout(getImageWidth, 10);
+
+                            var closethePopup = function(){
+                                markerHolderArray[found].closePopup();
+                            }
+
+                            setTimeout(closethePopup, 20);
+                                
+                            var reopenpopup = function(){
+                                popupOpenedByCode = true;
+                                markerHolderArray[found].openPopup();
+                            }
+                            
+                            var setPopupWidth = function(){
+                                $leafletpopupcontainer.css("width", targetWidth);
+                            }
+                            setTimeout(reopenpopup, 320);
+                            setTimeout(setPopupWidth, 330);
+
+                            
+                                
+
+                            
+                        });
+
+
+map.on('zoomend', function(e) {
+    if(map.getZoom() <= 4){
+      labelstringtype = "en_short";
+    }
+    else{
+      labelstringtype = "en";
+    }
+
+    map.removeLayer(labelgroup);
+    labelgroup = L.featureGroup([]);
+    printlabels();
+    labelgroup.addTo(map);
+});
+
+map.on("click", function(){
+    var found;
+    var f;
+if (markerHolderArray.length !== 0){
+    for (f=0; f<markerHolderArray.length; f++){
+
+            var popup = markerHolderArray[f].getPopup();
+
+            console.log("Popup open? " + popup._isOpen);
+            if(popup._isOpen){
+                console.log("Found marker w/ open popup!");
+                found = f;
+                break;
+            }
+    }
+    markerHolderArray[found].closePopup();
+}
+    
+});
+
+
+
+/* ---------------THE SLIDESHOW ITSELF-------------  */
+var previousnumber;
+var setSlideShow = function(number){ //Fired each time the slide is changed by clicking next/prev, by dragging the slider, or by uploading a new slide txt file.
+                    //Instead of simply applying the changes from the JSON object, this function checks if the current elements on the screen and the targeted elements for the current slide are the same or not.
+                    //If they're the same, the function will not bother changing them, which boosts slide change performance. 
+                    //the mapState object keeps track of the current markers, countries etc. which is also good for debugging purposes. See "MARKERS" below as an example.
+                    debugger;
+                    currShow = number;
+                    var theobject = theslideshow[number];
+                    var previousobject = theslideshow[previousnumber];
+                    //noreset here.
+                    console.log(number);
+                    var keepfocused;
+
+                    //Altering the existing slideshow data to avoid getting "undefined variable" errors:
+
+                    if(theobject.hasOwnProperty("focusoncountry") === false){ 
+                        theobject["focusoncountry"] = new Array(0);
+                    } else if (theobject["focusoncountry"].length === 0){
+                        theobject["focusoncountry"] = new Array(0);
+                    }
+
+                    if (theobject.hasOwnProperty("external_link") === false){
+                        theobject["external_link"] = new Array(0);
+                    } else if ( theobject["focusoncountry"].length === 0){
+                        theobject["external_link"] = new Array(0);
+                    }
+
+                    if(theobject.hasOwnProperty("markers") === false){
+                        theobject["markers"] = new Array(0);
+                    } else if (theobject["markers"].length === 0){
+                        theobject["markers"] = new Array(0);
+                    }
+
+                    //The following feature allowed the user to split lengthy subtitles into two without having to duplicate slides.
+                    //When the previous slide had an incomplete subtitle, the "extensional" one contained the remanining text as string and the existing features were copied off from the previous slide in this for loop.
+                    //Now I discourage its use by removing it from the Slideshow Editor, although there's an extensional slide in this demo to show you what it is.
+                    if(theobject.hasOwnProperty("extensional")){
+                    var slideshowfeatures = ["coordinates", "zoom", "focusoncountry", "date", "markers", "external_link"];
+                        for (var m = 0; m < slideshowfeatures.length; m++){
+                            var n = 1;
+                            if(theslideshow[number-n].hasOwnProperty(slideshowfeatures[m])){
+                            theobject[slideshowfeatures[m]] = theslideshow[number-n][slideshowfeatures[m]];
+                            } 
+                        }                                                
+                    }
+                                           
+
+                    /* -------------------GO TO COORDINATES---------------- */
+
+                    if (theobject.hasOwnProperty("coordinates")){
+                        if(theobject.hasOwnProperty("zoom")){
+                            map.setView(theobject["coordinates"] , theobject["zoom"]);
+                        }
+                        else{
+                            map.setView(theobject["coordinates"] , 5);   //5 is our default zoom level when zoom is unspecified.                         
+                        }
+                    }
+
+
+                    /* -------------------SET SUBTITLES---------------- */
+
+                    if (theobject.hasOwnProperty("subtitle")){
+                        subtext.innerHTML = theobject.subtitle;
+                    }
+
+
+                    /* ----------------REMOVE ALL COUNTRIES------------ */
+
+                    if (theobject.hasOwnProperty("removeallcountries")){ //I'm not sure if anyone would want to use this feature.
+                        mapState.CountryFocus = "nothing";
+                        removealllayers();
+                    } else if(theobject.hasOwnProperty("removeallcountries") === false && mapState.CountryFocus === "nothing"){
+                        resetcountries();
+                    }
+
+                    /* ----------------------MARKERS------------------- */
+                   
+
+                    
+                    if ( (arraysEqual(theobject["markers"], mapState.ActiveMarkers) === false) || (theobject["forceloadmarkers"] === true) ){ 
+                        console.log("mapState.ActiveMarkers: " + mapState.ActiveMarkers);
+                        console.log("theobject['markers']" + theobject["markers"]);
+                        if(theobject["markers"].length !== 0){
+                            if(mapState.ActiveMarkers.length !== 0) {
+                                map.removeLayer(markerHolderLayer);
+                                markerHolderArray.length = 0;
+                                markerHolderLayer.length = 0;
+                            }
+                        var imageSetArray = new Array();
+                        var markerHTMLArray = new Array();
+
+                        for(var i=0; i < theobject["markers"].length; i++){
+
+                            var currentMarker = theobject["markers"][i];
+                            var currentMarkerCoordinates = currentMarker["coordinates"];
+                            var currentMarkerText = currentMarker["text"];
+                            if (currentMarker.hasOwnProperty("header")){
+                                var currentMarkerHeader = currentMarker["header"];
+                            }
+                            else {
+                                var currentMarkerHeader = "";
+                            }                            
+                            var currentMarkerIconRepresentation = currentMarker["icon"];
+                            var currentMarkerImageSet = '';
+
+                            if(currentMarker.hasOwnProperty("imageset")){
+                                debugger;                                
+                                for (var m=0; m < currentMarker["imageset"].length; m++){
+                                    console.log(currentMarker["imageset"][m]["link"]);
+                                    if(currentMarker["imageset"][m]["link"].substring(0,3) === "htt" || currentMarker["imageset"][m]["link"].substring(0,3) === "www" || currentMarker["imageset"][m]["link"].indexOf(".com") > -1 ){
+
+                                        currentMarkerImageSet += '<a class="popupimagecontainer" ' + 'data-lightbox="marker'+ currShow + '" data-title="' + currentMarker["imageset"][m]["text"] + '" ' + 'href="' + currentMarker["imageset"][m]["link"] + '">' + '<img class="popupimage" src="' + currentMarker["imageset"][m]["link"] + '"></a>';
+
+                                    } else {
+                                        currentMarkerImageSet += '<a class="popupimagecontainer" ' + 'data-lightbox="marker'+ currShow + '" data-title="' + currentMarker["imageset"][m]["text"] + '" ' + 'href="images/' + currentMarker["imageset"][m]["link"] + '">' + '<img class="popupimage" src="images/' + currentMarker["imageset"][m]["link"] + '"></a>';
+                                        
+                                    }
+
+                                    imageSetArray[m] = currentMarkerImageSet;
+                                }
+                            }
+
+                            switch(currentMarkerIconRepresentation){
+                                case "swordsicon": var currentMarkerIcon = swordsIcon; break;
+                                case "swordsiconlight": var currentMarkerIcon = swordsIconLight; break;
+                                case "swordsiconwhite": var currentMarkerIcon = swordsIconWhite; break;
+                                case "cannonicon": var currentMarkerIcon = cannonIcon; break;
+                                case "cannoniconlight": var currentMarkerIcon = cannonIconLight; break;
+                                case "cannoniconwhite": var currentMarkerIcon = cannonIconWhite; break;
+                                case "factoryicon": var currentMarkerIcon = factoryIcon; break;
+                                case "factoryiconlight": var currentMarkerIcon = factoryIconLight; break;
+                                case "factoryiconwhite": var currentMarkerIcon = factoryIconWhite; break;
+                                case "mineicon": var currentMarkerIcon = mineIcon; break;
+                                case "mineiconlight": var currentMarkerIcon = mineIconWhite; break;
+                                case "mineiconwhite": var currentMarkerIcon = mineIconWhite; break;
+                                default: console.log("");
+                            }
+
+                            var currentMarkerHTML = '<p class="popupHeader">' + currentMarkerHeader + '</p><div class="popupdiv" id="popup' + i +'">' + currentMarkerImageSet + '<p class="popupText">' + currentMarkerText + '</p></div>';
+                            markerHTMLArray[i] = currentMarkerHTML;
+
+                            markerHolderArray[i] = L.marker(currentMarkerCoordinates, {icon: currentMarkerIcon});                 
+                            mapState.ActiveMarkers[i] = theobject["markers"][i];
+                        }
+
+                        markerHolderLayer = L.layerGroup(markerHolderArray);
+                        markerHolderLayer.addTo(map);
+
+
+                        for(var i=0; i < theobject["markers"].length; i++){
+                            markerHolderArray[i].bindPopup(markerHTMLArray[i]);
+                            if (theobject["markers"][i].hasOwnProperty("openpopup") && theobject["markers"][i]["openpopup"] === true){
+                                markerHolderArray[i].openPopup();
+                                //I deprecate the use of this function as well, as it's troublesome for the user to specify this option in the editor (the user may check this feature for two markers and expect both to pop, although Leaflet allows room for only one popup at a time).
+                                //Again, you will find this feature in the demo. If you come up with a better application of this feature in the Editor so only one marker has this "openpopup" feature, then we can keep it.
+                            }                             
+                        }
+
+                        
+                        }
+                        else {
+                            map.removeLayer(markerHolderLayer);
+                            mapState.ActiveMarkers.length = 0;
+                        }
+
+                    }
+
+                    /* ------------------ADD EXTERNAL LINK--------------------*/
+                    
+
+                    if (arraysEqual(theobject["external_link"], mapState.ActiveExternalLinks) === false ){
+                        if(theobject["external_link"].length !== 0){
+                            if(mapState.ActiveExternalLinks.length !== 0) {
+                                $("#external_link_holder").empty();
+                                mapState.ActiveExternalLinks.length = 0;
+                            }
+
+                        var currentTop = 35;
+
+                        for (i=0; i<theobject["external_link"].length; i++){
+
+                            var currentID = "external_link" + i;
+                            console.log("currentID: " + currentID);
+                            var previousID;
+
+                            if(i > 0){ 
+                                previousID = "external_link" + (i-1);
+                                console.log("previousID: " + previousID);
+                            }
+
+                            $("#external_link_holder").append('<div id="' + currentID + '" class="external_link"></div>');
+                            $("#" + currentID).append('<p class="external_link_text"><a class="external_link_text_href" target="_blank" href="' + theobject["external_link"][i]["link"] + '">' + theobject["external_link"][i]["text"] + '</a></p>');
+
+                                if(i > 0){
+                                    var positionfromtop = $("#" + previousID).css("top");
+                                    positionfromtop.replace('px', '');
+                                    positionfromtop = parseInt(positionfromtop);
+
+                                    var heightdiv = $("#" + previousID).css("height");
+                                    heightdiv.replace('px', '');
+                                    heightdiv = parseInt(heightdiv);
+
+                                    currentTop = positionfromtop + heightdiv + 10;
+                                    console.log("Final value: " + currentTop);
+                                    $("#" + currentID).css("top", currentTop + "px");
+                                }
+                                else {
+                                    $("#" + currentID).css("top", currentTop + "px");
+                                }
+
+                             mapState.ActiveExternalLinks[i] = theobject["external_link"][i];
+                        }
+                      
+
+                        $(".external_link").css("display", "block");
+                        }
+
+                        else {
+                            $("#external_link_holder").empty();
+                            mapState.ActiveExternalLinks.length = 0;
+                        }
+                    }
+
+                    
+
+
+                    /* ----------------COUNTRY COLOR CONTROL----------------- */
+
+                    
+
+                    if(arraysEqual(theobject["focusoncountry"], mapState.CountryFocus()) === false ) {
+                        if(theobject["focusoncountry"].length !== 0){
+                            focusoncountryNameOnly(theobject["focusoncountry"]);
+                        }
+                        else {
+                            resetcountries();
+                        }
+                        
+
+                    }
+
+                    /* -------------------SET HEADER------------------- */
+
+                    if (theobject.hasOwnProperty("header")){
+                        header.style.display = "table-cell";
+                        header.innerHTML = theobject["header"];
+                        $("#header").fadeIn(500).delay(3000).fadeOut(500);
+                    }
+
+                    
+
+                    /* -------------------EXTENSIONAL SUBTITLES--------------- */
+
+                    if(theobject.hasOwnProperty("extensional")){
+                        subtext.innerHTML = theobject.extensional;
+                        previousnumber = currShow;
+                        return false;   //JUMPS TO THE END OF setSlideShow();
+                    }
+
+                    subholder.style.display = "inline";
+previousnumber = currShow;       
+}
+
+
+
+var openaPopup = function(){ //Never used.
+debugger;
+   markers[0].openPopup();
+}
+
+
+$(document).ready(function(){
+
+    setSlideShow(0);
+
+    $(document).keydown(function(e){ //You can use left-right arrow keys to move slides or images.
+        debugger;
+
+
+        //Slides should change by arrow keys only when an image is not displayed fullscreen (obviously):
+        if (e.keyCode == 37) {
+            if(typeof document.getElementById("lightbox").style.display !== "undefined"){ 
+                if(document.getElementById("lightbox").style.display !== "block"){
+                previous();
+                return false;
+                }
+
+            }
+            else {
+                previous();
+                return false;
+            }
+        }
+        else if(e.keyCode == 39){
+            if(typeof document.getElementById("lightbox").style.display !== "undefined"){
+                if(document.getElementById("lightbox").style.display !== "block"){
+                    console.log(document.getElementById("lightbox").style);
+                next();
+                return false;
+                }
+
+            }
+            else {
+                next();
+                return false;
+            }
+        }
+    });
+});
+
+
+
+labelgroup.addTo(map);
+group.addLayer(everything);
+group.addTo(map);
+
+
+</script>
+
+
+
+
+</body>
+</html>

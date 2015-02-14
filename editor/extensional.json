@@ -1,0 +1,8 @@
+{
+	"$ref": "extensional.json",
+	"properties": {
+		"subtitle": {
+			"type": "string"
+		}
+	}
+}

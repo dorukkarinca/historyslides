@@ -1,0 +1,248 @@
+/** {
+    overflow-y: hidden;
+}*/
+
+body {
+    overflow-y: hidden;
+}
+
+#topbar {
+    top: 0;
+    height: 2rem;
+    width: 100%;
+    background-color: black;
+    z-index: 900;
+    display: block;
+    position: fixed;
+}
+#fileselector {
+    display: inline;
+    top: 10%;
+    z-index: 899;
+    position: absolute;
+}
+#menubar {
+    position: relative;
+    list-style-type: none;
+    margin: 0px;
+    height: 100%;
+    bottom: 0px;
+    overflow: hidden;
+}
+.linav{
+    text-decoration: none;
+    display: inline;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+    font-family: Georgia;
+}
+
+.navigation{
+    text-decoration: none;
+    color: white;
+}
+
+#editor_holder {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+#newslide{
+    bottom: 10px;
+    right: 10px;
+    position: fixed;
+    width: 70px;
+    height: 35px;
+}
+
+#slide_browser{
+    float: left;
+    height: 100%;
+    width: 17%;
+    background-color: green;
+    overflow: auto;
+}
+
+
+#slide_editor{
+    float: right;
+    background-color: blue;
+    height: 100%;
+    width: 83%;
+    overflow: auto;
+}
+
+#slide_editor_contents{
+    margin: 2rem;
+    width: 60%;
+    overflow: auto;
+}
+#browserpanel{
+    position: relative;
+    display: block;
+}
+
+#nothing{
+    position: relative;
+    display: block;
+    top: 0rem;
+    height: 2rem;
+    width: 100%
+}
+
+.browser_buttons{
+    position: relative;
+    display: inline;
+    margin: 0.3rem;
+    width: 44%;
+    height: 2rem;
+    font-size: 1rem;
+}
+
+#delete_slide{
+    padding: 0rem;
+}
+
+.button {
+    padding: 0px;
+}
+
+button {
+    padding: 0.5rem;
+}
+
+.tab {
+    position: relative;
+    background-color: red;
+    width: 100%;
+    margin: 0px;
+    height: 2.5rem;
+    display: block;
+}
+
+#tabs{
+    position: relative;
+    display: block;
+   /* overflow: auto;*/
+    top: 0rem;
+    height: 100%;
+    width: 100%;
+    margin-left: 0px;
+}
+
+.transparent{
+    position: relative;
+    opacity: 0;
+    height: 20rem;
+    width: 100%
+}
+
+.box{
+    position: relative !important;
+    width: 100% !important;
+    height: 2rem !important;
+}
+
+#coordinatediv, #zoomdiv{
+    display: inline-block;
+    width: 49%;
+    position: relative;
+}
+
+#coordinatediv {
+    margin-right: 0.2rem;
+}
+
+#zoomdiv{
+    margin-left: 0.2rem;
+}
+
+#coordinatetext, #coordinates, #zoomtext, #zoom{
+    display: block !important;
+    width: 100% !important;
+    position: relative !important;
+}
+
+.indent{
+    margin-left: 1rem !important;
+    margin-bottom: 1rem !important;
+    border-left: solid;
+    border-width: 0.2rem;
+    border-left-color: red;
+}
+
+.markerholder{
+
+}
+
+.markersubholder{
+    display: block;
+}
+.markersubparagraph{
+    display:inline; 
+    margin-left: 0.5rem;
+}
+
+#multimarkers{
+    border-left: none;
+}
+
+.imageset{
+    
+}
+
+
+#extensional_checkbox{
+    float: right;
+    position: relative;
+    top: 2rem;
+    display: inline-block;
+}
+
+.cross{
+    width: 1rem;
+    height: 1rem;
+    background-color: red;
+    color: white;
+    display: none;
+    padding: 0px;
+}
+
+.markercross{
+    position: relative;
+    float: right;
+    top: 0px;
+}
+
+.activetab{
+    background-color: blue;
+}
+
+.countryfocusholder {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+.blockdown{
+    display: inline-block;
+    width: 10rem;
+}
+
+.blockdown > input {
+    display: inline;
+}
+
+.lastslide{
+    margin-bottom: 4rem;
+}
+
+#download {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 0rem;
+}
+

@@ -1,0 +1,53 @@
+#topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2rem;
+    width: 100%;
+    background-color: black;
+    z-index: 900;
+}
+#fileselector {
+    display: inline;
+    top: 10%;
+    z-index: 899;
+    position: absolute;
+}
+#menubar {
+    position: relative;
+    list-style-type: none;
+    margin-top: 0.2rem;
+    height: 100%;
+}
+
+.title {
+    text-decoration: none;
+    display: inline;
+    color: white;
+    padding-left: 0px;
+    padding-right: 20px;
+    text-align: center;
+    font-family: Georgia;
+}
+.linav{
+    text-decoration: none;
+    display: inline;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+    font-family: Georgia;
+}
+
+.navigation{
+    text-decoration: none;
+    color: white;
+}
+
+#content{
+    position: absolute;
+    top: 3rem;
+    left: 5rem;
+    margin-right: 5rem;
+    text-align: justify;
+}
